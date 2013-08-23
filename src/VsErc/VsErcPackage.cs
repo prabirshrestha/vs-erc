@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
@@ -75,21 +76,7 @@ namespace PrabirShrestha.VsErc
             this.lua["erc.MYERC"] = ercPath;
 
             this.RegisterErcLogWindow();
-            this.LoadHostScriptFiles();
-
-            if (File.Exists(ercPath))
-            {
-                try
-                {
-                    this.lua.DoFile(ercPath);
-                }
-                catch (Exception ex)
-                {
-                    Log(ex.Message);
-                    Log(ex.StackTrace);
-                    MessageBox.Show(ex.Message, "VsErc Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            this.LoadScriptFiles();
         }
 
         private void RegisterErcLogWindow()
@@ -140,8 +127,30 @@ namespace PrabirShrestha.VsErc
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".erc");
         }
 
-        private void LoadHostScriptFiles()
+        private void LoadScriptFiles()
         {
+            var initScript = Path.Combine(AssemblyDirectory, "scripts", "init.lua");
+            try
+            {
+                this.lua.DoFile(initScript);
+            }
+            catch (Exception ex)
+            {
+                Log(ex.Message);
+                Log(ex.StackTrace);
+                MessageBox.Show(ex.Message, "VsErc Init Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        static public string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                var uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
         }
 
     }
