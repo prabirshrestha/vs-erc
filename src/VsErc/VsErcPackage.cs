@@ -28,6 +28,8 @@ namespace PrabirShrestha.VsErc
     // in the Help/About dialog of Visual Studio.
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [Guid(GuidList.guidVsErcPkgString)]
+    [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
+    [ProvideAutoLoad(UIContextGuids80.NoSolution)]
     public sealed class VsErcPackage : Package
     {
         /// <summary>
@@ -56,8 +58,8 @@ namespace PrabirShrestha.VsErc
         {
             Debug.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
-
         }
+
         #endregion
 
     }
