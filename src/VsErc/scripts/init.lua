@@ -2,7 +2,7 @@
 
 if not erc.messageBox then
 
-	MessageBox = luanet.import_type "System.Windows.Forms.MessageBox"
+	local MessageBox = luanet.import_type "System.Windows.Forms.MessageBox"
 
 	function erc.messageBox(message)
 		MessageBox.Show(message)
