@@ -71,3 +71,5 @@ node_modules/
 Thumbs.db
 .DS_Store
 !libs/*/[Bb]in/
+
+lua*.dll
