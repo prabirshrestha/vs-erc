@@ -11,6 +11,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using NLua;
+using NLua.Exceptions;
 
 namespace PrabirShrestha.VsErc
 {
@@ -37,6 +38,9 @@ namespace PrabirShrestha.VsErc
     {
         private readonly Lua lua;
 
+        private readonly IVsOutputWindow outWindow;
+        private IVsOutputWindowPane ercLogWindowPane;
+
         /// <summary>
         /// Default constructor of the package.
         /// Inside this method you can place any initialization code that does not require 
@@ -47,10 +51,12 @@ namespace PrabirShrestha.VsErc
         public VsErcPackage()
         {
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
+            outWindow = GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow;
+
             this.lua = new Lua();
             this.lua.NewTable("erc");
         }
-        
+
         /////////////////////////////////////////////////////////////////////////////
         // Overridden Package Implementation
         #region Package Members
@@ -61,13 +67,16 @@ namespace PrabirShrestha.VsErc
         /// </summary>
         protected override void Initialize()
         {
-            Debug.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
+            Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
 
             this.lua.LoadCLRPackage();
 
             var ercPath = GetErcFilePath();
             this.lua["erc.MYERC"] = ercPath;
+
+            this.RegisterErcLogWindow();
+            this.LoadHostScriptFiles();
 
             if (File.Exists(ercPath))
             {
@@ -80,6 +89,35 @@ namespace PrabirShrestha.VsErc
                     MessageBox.Show(ex.Message, "VsErc Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void RegisterErcLogWindow()
+        {
+            Guid customGuid = new Guid(GuidList.guidErcOutputPaneWindow);
+            string customTitle = ".erc";
+            this.outWindow.CreatePane(ref customGuid, customTitle, 1, 1);
+            this.outWindow.GetPane(ref customGuid, out ercLogWindowPane);
+
+            var methodInfo = GetType().GetMethod("Log");
+            this.lua.RegisterFunction("erc.log", this, methodInfo);
+
+            methodInfo = GetType().GetMethod("ActivateLogWindowPane");
+            this.lua.RegisterFunction("erc.activateLogView", this, methodInfo);
+        }
+
+        public void Log(object obj)
+        {
+            if (obj == null)
+            {
+                return;
+            }
+
+            this.ercLogWindowPane.OutputString(obj.ToString());
+        }
+
+        public void ActivateLogWindowPane()
+        {
+            this.ercLogWindowPane.Activate();
         }
 
         protected override void Dispose(bool disposing)
@@ -97,6 +135,10 @@ namespace PrabirShrestha.VsErc
         public static string GetErcFilePath()
         {
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".erc");
+        }
+
+        private void LoadHostScriptFiles()
+        {
         }
 
     }
