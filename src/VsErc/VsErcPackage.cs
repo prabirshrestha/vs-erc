@@ -54,6 +54,7 @@ namespace PrabirShrestha.VsErc
             outWindow = GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow;
 
             this.lua = new Lua();
+            this.lua.LoadCLRPackage();
             this.lua.NewTable("erc");
         }
 
@@ -70,8 +71,6 @@ namespace PrabirShrestha.VsErc
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
 
-            this.lua.LoadCLRPackage();
-
             var ercPath = GetErcFilePath();
             this.lua["erc.MYERC"] = ercPath;
 
@@ -86,6 +85,8 @@ namespace PrabirShrestha.VsErc
                 }
                 catch (Exception ex)
                 {
+                    Log(ex.Message);
+                    Log(ex.StackTrace);
                     MessageBox.Show(ex.Message, "VsErc Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -109,10 +110,12 @@ namespace PrabirShrestha.VsErc
         {
             if (obj == null)
             {
-                return;
+                this.ercLogWindowPane.OutputString("--null--");
             }
-
-            this.ercLogWindowPane.OutputString(obj.ToString());
+            else
+            {
+                this.ercLogWindowPane.OutputString(obj.ToString());
+            }
         }
 
         public void ActivateLogWindowPane()
