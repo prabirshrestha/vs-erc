@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
+using System.Windows.Forms;
 using Microsoft.Win32;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
+using NLua;
 
 namespace PrabirShrestha.VsErc
 {
@@ -32,6 +35,8 @@ namespace PrabirShrestha.VsErc
     [ProvideAutoLoad(UIContextGuids80.NoSolution)]
     public sealed class VsErcPackage : Package
     {
+        private readonly Lua lua;
+
         /// <summary>
         /// Default constructor of the package.
         /// Inside this method you can place any initialization code that does not require 
@@ -42,10 +47,10 @@ namespace PrabirShrestha.VsErc
         public VsErcPackage()
         {
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
+            this.lua = new Lua();
+            this.lua.NewTable("erc");
         }
-
-
-
+        
         /////////////////////////////////////////////////////////////////////////////
         // Overridden Package Implementation
         #region Package Members
@@ -58,9 +63,41 @@ namespace PrabirShrestha.VsErc
         {
             Debug.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
+
+            this.lua.LoadCLRPackage();
+
+            var ercPath = GetErcFilePath();
+            this.lua["erc.MYERC"] = ercPath;
+
+            if (File.Exists(ercPath))
+            {
+                try
+                {
+                    this.lua.DoFile(ercPath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "VsErc Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (this.lua != null)
+            {
+                this.lua.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
 
         #endregion
+
+        public static string GetErcFilePath()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".erc");
+        }
 
     }
 }
