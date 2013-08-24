@@ -157,6 +157,9 @@
     <Content Include="scripts\messagebox.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="scripts\clipboard.lua">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>

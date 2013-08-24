@@ -13,6 +13,8 @@ luanet.load_assembly "System.Windows.Forms, Version=4.0.0.0, Culture=neutral, Pu
 require 'messagebox'
 require 'settimeout'
 
+require 'clipboard'
+
 -- restore the original package path
 package.path = oldPackagePath;
 
