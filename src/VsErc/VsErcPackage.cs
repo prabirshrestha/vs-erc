@@ -97,11 +97,11 @@ namespace PrabirShrestha.VsErc
         {
             if (obj == null)
             {
-                this.ercLogWindowPane.OutputString("--null--");
+                this.ercLogWindowPane.OutputString("--null--" + Environment.NewLine);
             }
             else
             {
-                this.ercLogWindowPane.OutputString(obj.ToString());
+                this.ercLogWindowPane.OutputString(string.Format("{0}{1}", obj, Environment.NewLine));
             }
         }
 
