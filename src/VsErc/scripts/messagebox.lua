@@ -2,10 +2,12 @@
 local MessageBoxButtons = luanet.import_type "System.Windows.Forms.MessageBoxButtons"
 local MessageBoxIcon    = luanet.import_type "System.Windows.Forms.MessageBoxIcon"
 
-function erc.messagebox(message)
-    MessageBox.Show(message)
+erc.messagebox = {}
+
+function erc.messagebox.ok(message, title)
+    MessageBox.Show(message, title or '')
 end
 
-function erc.errormessagebox(message)
-    MessageBox.Show(message, 'Error', MessageBoxButtons.OK, MessageBoxIcon.Error)
+function erc.messagebox.error(message, title)
+    MessageBox.Show(message, title or 'Error', MessageBoxButtons.OK, MessageBoxIcon.Error)
 end
