@@ -16,5 +16,6 @@ require 'messagebox'
 package.path = old_package_path;
 
 if erc.MYERC then
-    dofile(erc.MYERC)
+    local myerc = assert(loadfile(erc.MYERC))
+    myerc()
 end
