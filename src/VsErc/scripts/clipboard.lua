@@ -1,9 +1,11 @@
 ﻿local Clipboard = luanet.import_type "System.Windows.Forms.Clipboard"
 
-function erc.getclipboard()
+erc.clipboard = {}
+
+function erc.clipboard.gettext()
 	return Clipboard.GetText()
 end
 
-function erc.setclipboard(text)
+function erc.clipboard.settext(text)
 	Clipboard.SetText(text)
 end
