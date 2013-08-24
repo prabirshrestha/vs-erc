@@ -133,6 +133,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Content Include="scripts\settimeout.lua">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Compile Include="VsErcPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

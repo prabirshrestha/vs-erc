@@ -11,6 +11,7 @@ package.path = package.path..';' .. scriptDir .. '?.lua'
 -- import packages here
 luanet.load_assembly "System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
 require 'messagebox'
+require 'settimeout'
 
 -- restore the original package path
 package.path = oldPackagePath;
