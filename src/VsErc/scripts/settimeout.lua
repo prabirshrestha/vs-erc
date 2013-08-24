@@ -9,4 +9,6 @@ function erc.settimeout(timeout, callback)
 		callback()
 	end)
 
+	-- todo implement cancellation
+
 end

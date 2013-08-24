@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
@@ -57,6 +58,9 @@ namespace PrabirShrestha.VsErc
             this.lua = new Lua();
             this.lua.LoadCLRPackage();
             this.lua.NewTable("erc");
+            this.lua.NewTable("erc.editor");
+            this.lua.NewTable("erc._editor");
+            this.lua.NewTable("erc._editor.vs");
         }
 
         /////////////////////////////////////////////////////////////////////////////
@@ -76,9 +80,35 @@ namespace PrabirShrestha.VsErc
             this.lua["erc.MYERC"] = ercPath;
 
             this.RegisterErcLogWindow();
+            this.RegisterCast();
+            this.RegisterServiceProvider();
+
+            //var x = DynamicCastTo(ServiceProvider.GlobalProvider.GetService(I), typeof (IVsStatusbar), false);
+
             this.LoadScriptFiles();
         }
 
+        private void RegisterServiceProvider()
+        {
+            this.lua.NewTable("erc._editor.vs.serviceprovider");
+
+            var methodInfo = GetType().GetMethod("GetServiceByGuid");
+            this.lua.RegisterFunction("erc._editor.vs.serviceprovider.getbyguid", methodInfo);
+            
+            methodInfo = GetType().GetMethod("GetServiceByType");
+            this.lua.RegisterFunction("erc._editor.vs.serviceprovider.getbytype", methodInfo);
+        }
+
+        public static object GetServiceByGuid(string guid)
+        {
+            return ServiceProvider.GlobalProvider.GetService(new Guid(guid));
+        }
+
+        public static object GetServiceByType(Type serviceType)
+        {
+            return ServiceProvider.GlobalProvider.GetService(serviceType);
+        }
+        
         private void RegisterErcLogWindow()
         {
             Guid customGuid = new Guid(GuidList.guidErcOutputPaneWindow);
@@ -90,7 +120,7 @@ namespace PrabirShrestha.VsErc
             this.lua.RegisterFunction("erc.log", this, methodInfo);
 
             methodInfo = GetType().GetMethod("ActivateLogWindowPane");
-            this.lua.RegisterFunction("erc.activateLogView", this, methodInfo);
+            this.lua.RegisterFunction("erc.activatelogview", this, methodInfo);
         }
 
         public void Log(object obj)
@@ -108,6 +138,32 @@ namespace PrabirShrestha.VsErc
         public void ActivateLogWindowPane()
         {
             this.ercLogWindowPane.Activate();
+        }
+
+        private void RegisterCast()
+        {
+            // http://stackoverflow.com/a/4925762/157260
+            var methodInfo = GetType().GetMethod("DynamicCastTo");
+            this.lua.RegisterFunction("erc._editor.vs.cast", methodInfo);
+        }
+
+        public static T CastTo<T>(object obj, bool safeCast) where T : class
+        {
+            try
+            {
+                return (T)obj;
+            }
+            catch
+            {
+                if (safeCast) return null;
+                else throw;
+            }
+        }
+
+        public static dynamic DynamicCastTo(object obj, Type castTo, bool safeCast)
+        {
+            MethodInfo castMethod = typeof(VsErcPackage).GetMethod("CastTo").MakeGenericMethod(castTo);
+            return castMethod.Invoke(null, new object[] { obj, safeCast });
         }
 
         protected override void Dispose(bool disposing)
