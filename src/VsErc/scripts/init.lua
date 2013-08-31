@@ -21,11 +21,10 @@ luanet.load_assembly(erc._editor.vs.assemblies.vsshell)
 luanet.load_assembly(erc._editor.vs.assemblies.vsinterop)
 
 -- import packages here
+require 'clipboard'
 require 'messagebox'
 require 'settimeout'
 require 'statusbar'
-
-require 'clipboard'
 
 -- restore the original package path
 package.path = oldPackagePath;
