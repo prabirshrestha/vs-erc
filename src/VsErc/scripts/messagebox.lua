@@ -1,6 +1,7 @@
 ﻿local MessageBox        = luanet.import_type "System.Windows.Forms.MessageBox"
 local MessageBoxButtons = luanet.import_type "System.Windows.Forms.MessageBoxButtons"
 local MessageBoxIcon    = luanet.import_type "System.Windows.Forms.MessageBoxIcon"
+local DialogResult    	= luanet.import_type "System.Windows.Forms.DialogResult"
 
 erc.messagebox = {}
 
@@ -14,5 +15,10 @@ end
 
 function erc.messagebox.okcancel(message, title, ok, cancel)
 	-- ok and cancel text not supported yet
-	MessageBox.Show(message, title or '', MessageBoxButtons.OKCancel)
+	local result = MessageBox.Show(message, title or '', MessageBoxButtons.OKCancel)
+	if result == DialogResult.OK then
+		return true
+	else
+		return false
+	end
 end
