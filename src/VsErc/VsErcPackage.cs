@@ -38,7 +38,19 @@ namespace PrabirShrestha.VsErc
     [ProvideAutoLoad(UIContextGuids80.NoSolution)]
     public sealed class VsErcPackage : Package
     {
-        private readonly Lua lua;
+        private static readonly Lua lua = new Lua();
+
+        public static Lua Lua { get { return lua; } }
+
+        static VsErcPackage()
+        {
+            lua = new Lua();
+            lua.LoadCLRPackage();
+            lua.NewTable("erc");
+            lua.NewTable("erc.editor");
+            lua.NewTable("erc._editor");
+            lua.NewTable("erc._editor.vs");
+        }
 
         private readonly IVsOutputWindow outWindow;
         private IVsOutputWindowPane ercLogWindowPane;
@@ -54,13 +66,6 @@ namespace PrabirShrestha.VsErc
         {
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
             outWindow = GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow;
-
-            this.lua = new Lua();
-            this.lua.LoadCLRPackage();
-            this.lua.NewTable("erc");
-            this.lua.NewTable("erc.editor");
-            this.lua.NewTable("erc._editor");
-            this.lua.NewTable("erc._editor.vs");
         }
 
         /////////////////////////////////////////////////////////////////////////////
@@ -77,7 +82,7 @@ namespace PrabirShrestha.VsErc
             base.Initialize();
 
             var ercPath = GetErcFilePath();
-            this.lua["erc.MYERC"] = ercPath;
+            Lua["erc.MYERC"] = ercPath;
 
             this.RegisterErcLogWindow();
             this.RegisterCast();
@@ -90,13 +95,13 @@ namespace PrabirShrestha.VsErc
 
         private void RegisterServiceProvider()
         {
-            this.lua.NewTable("erc._editor.vs.serviceprovider");
+            Lua.NewTable("erc._editor.vs.serviceprovider");
 
             var methodInfo = GetType().GetMethod("GetServiceByGuid");
-            this.lua.RegisterFunction("erc._editor.vs.serviceprovider.getbyguid", methodInfo);
-            
+            Lua.RegisterFunction("erc._editor.vs.serviceprovider.getbyguid", methodInfo);
+
             methodInfo = GetType().GetMethod("GetServiceByType");
-            this.lua.RegisterFunction("erc._editor.vs.serviceprovider.getbytype", methodInfo);
+            Lua.RegisterFunction("erc._editor.vs.serviceprovider.getbytype", methodInfo);
         }
 
         public static object GetServiceByGuid(string guid)
@@ -108,7 +113,7 @@ namespace PrabirShrestha.VsErc
         {
             return ServiceProvider.GlobalProvider.GetService(serviceType);
         }
-        
+
         private void RegisterErcLogWindow()
         {
             Guid customGuid = new Guid(GuidList.guidErcOutputPaneWindow);
@@ -117,10 +122,10 @@ namespace PrabirShrestha.VsErc
             this.outWindow.GetPane(ref customGuid, out ercLogWindowPane);
 
             var methodInfo = GetType().GetMethod("Log");
-            this.lua.RegisterFunction("erc.log", this, methodInfo);
+            Lua.RegisterFunction("erc.log", this, methodInfo);
 
             methodInfo = GetType().GetMethod("ActivateLogWindowPane");
-            this.lua.RegisterFunction("erc.activatelogview", this, methodInfo);
+            Lua.RegisterFunction("erc.activatelogview", this, methodInfo);
         }
 
         public void Log(object obj)
@@ -144,7 +149,7 @@ namespace PrabirShrestha.VsErc
         {
             // http://stackoverflow.com/a/4925762/157260
             var methodInfo = GetType().GetMethod("DynamicCastTo");
-            this.lua.RegisterFunction("erc._editor.vs.cast", methodInfo);
+            Lua.RegisterFunction("erc._editor.vs.cast", methodInfo);
         }
 
         public static T CastTo<T>(object obj, bool safeCast) where T : class
@@ -168,9 +173,9 @@ namespace PrabirShrestha.VsErc
 
         protected override void Dispose(bool disposing)
         {
-            if (this.lua != null)
+            if (Lua != null)
             {
-                this.lua.Dispose();
+                Lua.Dispose();
             }
 
             base.Dispose(disposing);
@@ -188,7 +193,7 @@ namespace PrabirShrestha.VsErc
             var initScript = Path.Combine(AssemblyDirectory, "scripts", "init.lua");
             try
             {
-                this.lua.DoFile(initScript);
+                Lua.DoFile(initScript);
             }
             catch (Exception ex)
             {

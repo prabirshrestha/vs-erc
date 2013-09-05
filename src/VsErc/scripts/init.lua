@@ -22,6 +22,7 @@ luanet.load_assembly(erc._editor.vs.assemblies.vsinterop)
 
 -- import packages here
 require 'clipboard'
+require 'events/init'
 require 'messagebox'
 require 'settimeout'
 require 'statusbar'
