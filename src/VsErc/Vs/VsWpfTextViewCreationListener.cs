@@ -14,7 +14,13 @@ namespace PrabirShrestha.VsErc.Vs
     {
         public void TextViewCreated(IWpfTextView textView)
         {
+            textView.Closed += textView_Closed;
 	    Debug.WriteLine("loaded");
+        }
+
+        void textView_Closed(object sender, System.EventArgs e)
+        {
+	    Debug.WriteLine("closed");
         }
     }
 }
