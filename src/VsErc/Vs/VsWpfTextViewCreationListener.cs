@@ -1,7 +1,5 @@
-﻿
-
+﻿using System;
 using System.ComponentModel.Composition;
-using System.Diagnostics;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 using NLua;
@@ -13,29 +11,20 @@ namespace PrabirShrestha.VsErc.Vs
     [TextViewRole(PredefinedTextViewRoles.Document)]
     public class VsErcWpfTextViewCreationListener : IWpfTextViewCreationListener
     {
-        private static LuaFunction textcreatedFunction;
-
-        private static LuaFunction TextcreatedFunction
-        {
-            get
-            {
-                if (textcreatedFunction == null)
-                {
-                    textcreatedFunction =
-                        VsErcPackage.Lua.GetFunction("erc._editor.vs.events.onload_VsErcWpfTextViewCreationListener_TextCreated");
-                }
-                return textcreatedFunction;
-            }
-        }
+        private static Lazy<LuaFunction> TextCreatedFunction = new Lazy<LuaFunction>(() =>
+            VsErcPackage.Lua.GetFunction("erc._editor.vs.events.onload_VsErcWpfTextViewCreationListener_TextCreated"));
+        private static Lazy<LuaFunction> TextClosedFunction = new Lazy<LuaFunction>(() =>
+            VsErcPackage.Lua.GetFunction("erc._editor.vs.events.onclose_VsErcWpfTextViewCreationListener_TextClosed"));
 
         public void TextViewCreated(IWpfTextView textView)
         {
-            TextcreatedFunction.Call(textView);
+            TextCreatedFunction.Value.Call(textView);
             textView.Closed += textView_Closed;
         }
 
-        void textView_Closed(object sender, System.EventArgs e)
+        void textView_Closed(object sender, EventArgs e)
         {
+            TextClosedFunction.Value.Call(sender);
         }
     }
 }
