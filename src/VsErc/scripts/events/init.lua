@@ -15,3 +15,5 @@ end
 
 require('events/onload')
 require('events/onclose')
+require('events/onactivated')
+require('events/ondeactivated')
