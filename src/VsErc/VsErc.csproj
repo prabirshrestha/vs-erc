@@ -140,6 +140,9 @@
     <Content Include="scripts\events\init.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="scripts\events\onclose.lua">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Compile Include="Vs\VsWpfTextViewCreationListener.cs" />
     <Content Include="scripts\settimeout.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -169,6 +172,9 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scripts\statusbar.lua">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="scripts\events\onload.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
