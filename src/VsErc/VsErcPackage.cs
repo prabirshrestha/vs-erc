@@ -70,7 +70,6 @@ namespace PrabirShrestha.VsErc
 
         /////////////////////////////////////////////////////////////////////////////
         // Overridden Package Implementation
-        #region Package Members
 
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
@@ -82,7 +81,10 @@ namespace PrabirShrestha.VsErc
             base.Initialize();
 
             var ercPath = GetErcFilePath();
-            Lua["erc.MYERC"] = ercPath;
+            if (File.Exists(ercPath))
+            {
+                Lua["erc.MYERC"] = ercPath;
+            }
 
             this.RegisterErcLogWindow();
             this.RegisterCast();
@@ -180,8 +182,6 @@ namespace PrabirShrestha.VsErc
 
             base.Dispose(disposing);
         }
-
-        #endregion
 
         public static string GetErcFilePath()
         {
