@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
 using System.Windows.Forms;
+using EnvDTE;
+using EnvDTE80;
 using Microsoft.Win32;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -39,8 +41,20 @@ namespace PrabirShrestha.VsErc
     public sealed class VsErcPackage : Package
     {
         private static readonly Lua lua = new Lua();
+        private static DTE2 _dte;
 
         public static Lua Lua { get { return lua; } }
+
+        public static DTE2 DTE
+        {
+            get
+            {
+                if (_dte == null)
+                    _dte = ServiceProvider.GlobalProvider.GetService(typeof(DTE)) as DTE2;
+
+                return _dte;
+            }
+        }
 
         static VsErcPackage()
         {
@@ -87,10 +101,9 @@ namespace PrabirShrestha.VsErc
             }
 
             this.RegisterErcLogWindow();
+            this.RegisterDte();
             this.RegisterCast();
             this.RegisterServiceProvider();
-
-            //var x = DynamicCastTo(ServiceProvider.GlobalProvider.GetService(I), typeof (IVsStatusbar), false);
 
             this.LoadScriptFiles();
         }
@@ -140,6 +153,12 @@ namespace PrabirShrestha.VsErc
             {
                 this.ercLogWindowPane.OutputString(string.Format("{0}{1}", obj, Environment.NewLine));
             }
+        }
+
+        private void RegisterDte()
+        {
+            var methodInfo = GetType().GetProperty("DTE").GetMethod;
+            Lua.RegisterFunction("erc._editor.vs.dte", this, methodInfo);
         }
 
         public void ActivateLogWindowPane()
