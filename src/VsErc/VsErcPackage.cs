@@ -62,6 +62,7 @@ namespace PrabirShrestha.VsErc
             lua.LoadCLRPackage();
             lua.NewTable("erc");
             lua.NewTable("erc.editor");
+            lua.NewTable("erc.editor.vs");
             lua.NewTable("erc._editor");
             lua.NewTable("erc._editor.vs");
         }
