@@ -84,6 +84,33 @@ namespace VSP
             }
         }
 
+        /// <remarks>http://blogs.clariusconsulting.net/pga/how-do-i-get-a-project-from-a-ivshierarchy-and-viceversa/</remarks>
+        public Project GetProject(IVsHierarchy hierarchy)
+        {
+            object project;
+
+            ErrorHandler.ThrowOnFailure
+                (hierarchy.GetProperty(
+                    VSConstants.VSITEMID_ROOT,
+                    (int)__VSHPROPID.VSHPROPID_ExtObject,
+                    out project));
+
+            return (project as Project);
+        }
+
+        /// <remarks>http://blogs.clariusconsulting.net/pga/how-do-i-get-a-project-from-a-ivshierarchy-and-viceversa/</remarks>
+        public IVsHierarchy GetHierarchy(Project project, IServiceProvider serviceProvider = null)
+        {
+            var solution = serviceProvider == null ? VsSolution :
+                serviceProvider.GetService(typeof(SVsSolution)) as IVsSolution;
+
+            IVsHierarchy hierarchy;
+
+            solution.GetProjectOfUniqueName(project.FullName, out hierarchy);
+
+            return hierarchy;
+        }
+
         public object GetGlobalService(Type type)
         {
             return GetService(GlobalServiceProvider, type.GUID, false);

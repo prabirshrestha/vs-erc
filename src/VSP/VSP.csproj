@@ -42,6 +42,7 @@
     <Compile Include="Comands\VsCommands.cs" />
     <Compile Include="Events\PostSaveEventArgs.cs" />
     <Compile Include="Events\PostSolutionCloseEventArgs.cs" />
+    <Compile Include="Events\PostProjectOpenEventArgs.cs" />
     <Compile Include="Events\PreSolutionCloseEventArgs.cs" />
     <Compile Include="Events\QueryCloseSolutionEventArgs.cs" />
     <Compile Include="Events\PostSolutionOpenEventArgs.cs" />

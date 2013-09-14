@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio;
+﻿using System;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 
 namespace VSP.Events.Vs
@@ -16,6 +17,13 @@ namespace VSP.Events.Vs
 
         public int OnAfterOpenProject(IVsHierarchy pHierarchy, int fAdded)
         {
+            var args = new PostProjectOpenEventArgs(this.events);
+
+            args.Project = this.events.VsHelper.GetProject(pHierarchy);
+            args.FilePath = args.Project.FullName;
+            args.Added = Convert.ToBoolean(fAdded);
+            this.events.TriggerPostProjectOpen(args);
+
             return VSConstants.S_OK;
         }
 
