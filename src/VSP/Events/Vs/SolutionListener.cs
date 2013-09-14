@@ -20,7 +20,6 @@ namespace VSP.Events.Vs
             var args = new PostProjectOpenEventArgs(this.events);
 
             args.Project = this.events.VsHelper.GetProject(pHierarchy);
-            args.FilePath = args.Project.FullName;
             args.Added = Convert.ToBoolean(fAdded);
             this.events.TriggerPostProjectOpen(args);
 
@@ -29,6 +28,20 @@ namespace VSP.Events.Vs
 
         public int OnQueryCloseProject(IVsHierarchy pHierarchy, int fRemoving, ref int pfCancel)
         {
+            var args = new QueryCloseProjectEventArgs(this.events)
+            {
+                CloseProject = true,
+                Project = this.events.VsHelper.GetProject(pHierarchy),
+                Removing = Convert.ToBoolean(fRemoving)
+            };
+
+            this.events.TriggerQueryCloseProject(args);
+
+            if (!args.CloseProject)
+            {
+                pfCancel = 1;
+            }
+
             return VSConstants.S_OK;
         }
 
@@ -54,11 +67,11 @@ namespace VSP.Events.Vs
 
         public int OnAfterOpenSolution(object pUnkReserved, int fNewSolution)
         {
-            var args = new PostSolutionOpenEventArgs(this.events);
+            var args = new PostSolutionOpenEventArgs(this.events)
+            {
+                Solution = this.events.VsHelper.DTE.Solution
+            };
 
-            var solution = this.events.VsHelper.DTE.Solution;
-            args.FilePath = solution.FullName;
-            args.Solution = solution;
             this.events.TriggerPostSolutionOpen(args);
 
             return VSConstants.S_OK;
@@ -66,12 +79,12 @@ namespace VSP.Events.Vs
 
         public int OnQueryCloseSolution(object pUnkReserved, ref int pfCancel)
         {
-            var args = new QueryCloseSolutionEventArgs(this.events);
+            var args = new QueryCloseSolutionEventArgs(this.events)
+            {
+                CloseSolution = true,
+                Solution = this.events.VsHelper.DTE.Solution
+            };
 
-            var solution = this.events.VsHelper.DTE.Solution;
-            args.CloseSolution = true;
-            args.FilePath = solution.FullName;
-            args.Solution = solution;
             this.events.TriggerQueryCloseSolution(args);
 
             if (!args.CloseSolution)
@@ -84,11 +97,11 @@ namespace VSP.Events.Vs
 
         public int OnBeforeCloseSolution(object pUnkReserved)
         {
-            var args = new PreSolutionCloseEventArgs(this.events);
+            var args = new PreSolutionCloseEventArgs(this.events)
+            {
+                Solution = this.events.VsHelper.DTE.Solution
+            };
 
-            var solution = this.events.VsHelper.DTE.Solution;
-            args.FilePath = solution.FullName;
-            args.Solution = solution;
             this.events.TriggerPreSolutionClose(args);
 
             return VSConstants.S_OK;
@@ -96,11 +109,11 @@ namespace VSP.Events.Vs
 
         public int OnAfterCloseSolution(object pUnkReserved)
         {
-            var args = new PostSolutionCloseEventArgs(this.events);
+            var args = new PostSolutionCloseEventArgs(this.events)
+            {
+                Solution = this.events.VsHelper.DTE.Solution
+            };
 
-            var solution = this.events.VsHelper.DTE.Solution;
-            args.FilePath = solution.FullName;
-            args.Solution = solution;
             this.events.TriggerPostSolutionClose(args);
 
             return VSConstants.S_OK;

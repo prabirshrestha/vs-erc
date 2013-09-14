@@ -2,7 +2,7 @@
 
 namespace VSP.Events
 {
-    public class PostProjectOpenEventArgs
+    public class QueryCloseProjectEventArgs
     {
         private readonly VsEvents events;
 
@@ -14,7 +14,7 @@ namespace VSP.Events
             }
         }
 
-        public PostProjectOpenEventArgs(VsEvents vsEvents)
+        public QueryCloseProjectEventArgs(VsEvents vsEvents)
         {
             this.events = vsEvents;
         }
@@ -27,7 +27,11 @@ namespace VSP.Events
             }
         }
 
+        public bool Removing { get; set; }
+
+        public bool CloseProject { get; set; }
+
         public Project Project { get; set; }
-        public bool Added { get; set; }
+
     }
 }

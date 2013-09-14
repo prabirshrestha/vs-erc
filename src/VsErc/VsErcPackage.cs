@@ -81,6 +81,9 @@ namespace PrabirShrestha.VsErc
             VsHelper.Events.PostProjectOpen += (sender, args) =>
                 Debug.WriteLine("post project open " + args.FilePath + " " + args.Added);
 
+            VsHelper.Events.QueryCloseProject += (sender, args) =>
+                Debug.WriteLine("query close project " + args.FilePath + " " + args.Removing);
+
             //var lua = new Lua();
             //lua.LoadCLRPackage();
             //ercBindings = new ErcBindings(lua, ErcBindings.DefaultErcFilePath);

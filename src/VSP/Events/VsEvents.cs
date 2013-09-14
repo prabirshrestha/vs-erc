@@ -23,6 +23,7 @@ namespace VSP.Events
         public event EventHandler<PostSolutionCloseEventArgs> PostSolutionClose;
 
         public event EventHandler<PostProjectOpenEventArgs> PostProjectOpen; 
+        public event EventHandler<QueryCloseProjectEventArgs> QueryCloseProject;
 
         public VsEvents(VsHelper vsHelper)
         {
@@ -84,6 +85,14 @@ namespace VSP.Events
             if (PostProjectOpen != null)
             {
                 PostProjectOpen(this, args);
+            }
+        }
+
+        internal void TriggerQueryCloseProject(QueryCloseProjectEventArgs args)
+        {
+            if (QueryCloseProject != null)
+            {
+                QueryCloseProject(this, args);
             }
         }
     }

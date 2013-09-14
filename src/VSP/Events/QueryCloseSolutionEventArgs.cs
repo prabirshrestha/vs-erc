@@ -19,7 +19,13 @@ namespace VSP.Events
             this.events = vsEvents;
         }
 
-        public string FilePath { get; set; }
+        public string FilePath
+        {
+            get
+            {
+                return Solution.FullName;
+            }
+        }
 
         public bool CloseSolution { get; set; }
 
