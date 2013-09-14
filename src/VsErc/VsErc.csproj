@@ -160,7 +160,6 @@
     <Content Include="scripts\events\init.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Compile Include="Vs\VsWpfTextViewCreationListener.cs" />
     <Content Include="scripts\settimeout.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
