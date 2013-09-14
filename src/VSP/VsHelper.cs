@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using EnvDTE;
+using EnvDTE80;
+using Microsoft.VisualStudio.Shell;
 using VSP.Comands;
 using VSP.Events;
 
@@ -9,6 +11,13 @@ namespace VSP
         private readonly Package package;
         private readonly VsEvents events;
         private readonly VsCommands commands;
+
+        private static DTE2 dte;
+
+        private static DTE2 sdte
+        {
+            get { return dte ?? (dte = ServiceProvider.GlobalProvider.GetService(typeof(DTE)) as DTE2); }
+        }
 
         public VsHelper(Package package)
         {
@@ -36,6 +45,11 @@ namespace VSP
             {
                 return this.events;
             }
+        }
+
+        public DTE2 DTE
+        {
+            get { return sdte; }
         }
     }
 }
