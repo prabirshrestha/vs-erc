@@ -8,6 +8,7 @@ namespace VSP.Events
         private readonly VsHelper vsHelper;
         private readonly DocumentListener documentListener;
         private readonly SolutionListener solutionListener;
+        private readonly ProjectDocumensListener projectDocumentListener;
 
         public VsHelper VsHelper
         {
@@ -29,11 +30,14 @@ namespace VSP.Events
         public event EventHandler<PreProjectUnloadEventArgs> PreProjectUnload;
         public event EventHandler<PostProjectLoadEventArgs> PostProjectLoad;
 
+        public event EventHandler<QueryProjectAddFilesEventArgs> QueryProjectAddFiles; 
+
         public VsEvents(VsHelper vsHelper)
         {
             this.vsHelper = vsHelper;
             this.documentListener = new DocumentListener(this);
             this.solutionListener = new SolutionListener(this);
+            this.projectDocumentListener = new ProjectDocumensListener(this);
         }
 
         internal void TriggerPreSave(PreSaveEventArgs args)
@@ -129,6 +133,14 @@ namespace VSP.Events
             if (PostProjectLoad != null)
             {
                 PostProjectLoad(this, args);
+            }
+        }
+
+        public void TriggerQueryProjectAddFiles(QueryProjectAddFilesEventArgs args)
+        {
+            if (QueryProjectAddFiles != null)
+            {
+                QueryProjectAddFiles(this, args);
             }
         }
     }

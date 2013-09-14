@@ -111,6 +111,20 @@ namespace VSP
             return hierarchy;
         }
 
+        private IVsTrackProjectDocuments2 projectDocumentTracker2;
+        public IVsTrackProjectDocuments2 ProjectDocumentTracker2
+        {
+            get
+            {
+                if (projectDocumentTracker2 == null)
+                {
+                    projectDocumentTracker2 = GetGlobalService<IVsTrackProjectDocuments2>(typeof(SVsTrackProjectDocuments));
+                }
+
+                return projectDocumentTracker2;
+            }
+        }
+
         public object GetGlobalService(Type type)
         {
             return GetService(GlobalServiceProvider, type.GUID, false);
