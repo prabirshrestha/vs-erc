@@ -28,7 +28,7 @@ Editor specific features.
 name | description | sample result
 --- | --- | --- | ---
 name() | gets the name of the editor | `vs`
-version() | gets the version of the editor | `12.0.0`
+version() | gets the version of the editor | `12.0`
 
 ### erc.editor.vs
 `erc.editor.vs` - visual studio specific features available to both the host and user scripts.

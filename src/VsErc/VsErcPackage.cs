@@ -1,21 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.ComponentModel.Design;
-using System.Windows.Forms;
-using EnvDTE;
-using EnvDTE80;
-using Microsoft.Win32;
-using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using NLua;
-using NLua.Exceptions;
+using PrabirShrestha.VsErc.Bindings;
 
 namespace PrabirShrestha.VsErc
 {
@@ -40,199 +28,35 @@ namespace PrabirShrestha.VsErc
     [ProvideAutoLoad(UIContextGuids80.NoSolution)]
     public sealed class VsErcPackage : Package
     {
-        private static readonly Lua lua = new Lua();
-        private static DTE2 _dte;
+        private static ErcBindings ercBindings;
 
-        public static Lua Lua { get { return lua; } }
-
-        public static DTE2 DTE
+        public static ErcBindings ErcBindings
         {
-            get
-            {
-                if (_dte == null)
-                    _dte = ServiceProvider.GlobalProvider.GetService(typeof(DTE)) as DTE2;
-
-                return _dte;
-            }
+            get { return ercBindings; }
         }
 
-        static VsErcPackage()
-        {
-            lua = new Lua();
-            lua.LoadCLRPackage();
-            lua.NewTable("erc");
-            lua.NewTable("erc.editor");
-            lua.NewTable("erc.editor.vs");
-            lua.NewTable("erc._editor");
-            lua.NewTable("erc._editor.vs");
-        }
+        public static VsErcPackage Instance { get; private set; }
 
-        private readonly IVsOutputWindow outWindow;
-        private IVsOutputWindowPane ercLogWindowPane;
-
-        /// <summary>
-        /// Default constructor of the package.
-        /// Inside this method you can place any initialization code that does not require 
-        /// any Visual Studio service because at this point the package object is created but 
-        /// not sited yet inside Visual Studio environment. The place to do all the other 
-        /// initialization is the Initialize method.
-        /// </summary>
-        public VsErcPackage()
-        {
-            Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
-            outWindow = GetGlobalService(typeof(SVsOutputWindow)) as IVsOutputWindow;
-        }
-
-        /////////////////////////////////////////////////////////////////////////////
-        // Overridden Package Implementation
-
-        /// <summary>
-        /// Initialization of the package; this method is called right after the package is sited, so this is the place
-        /// where you can put all the initialization code that rely on services provided by VisualStudio.
-        /// </summary>
         protected override void Initialize()
         {
-            Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
+            Instance = this;
 
-            var ercPath = GetErcFilePath();
-            if (File.Exists(ercPath))
-            {
-                Lua["erc.MYERC"] = ercPath;
-            }
-
-            this.RegisterErcLogWindow();
-            this.RegisterDte();
-            this.RegisterCast();
-            this.RegisterServiceProvider();
-
-            this.LoadScriptFiles();
-        }
-
-        private void RegisterServiceProvider()
-        {
-            Lua.NewTable("erc._editor.vs.serviceprovider");
-
-            var methodInfo = GetType().GetMethod("GetServiceByGuid");
-            Lua.RegisterFunction("erc._editor.vs.serviceprovider.getbyguid", methodInfo);
-
-            methodInfo = GetType().GetMethod("GetServiceByType");
-            Lua.RegisterFunction("erc._editor.vs.serviceprovider.getbytype", methodInfo);
-        }
-
-        public static object GetServiceByGuid(string guid)
-        {
-            return ServiceProvider.GlobalProvider.GetService(new Guid(guid));
-        }
-
-        public static object GetServiceByType(Type serviceType)
-        {
-            return ServiceProvider.GlobalProvider.GetService(serviceType);
-        }
-
-        private void RegisterErcLogWindow()
-        {
-            Guid customGuid = new Guid(GuidList.guidErcOutputPaneWindow);
-            string customTitle = ".erc";
-            this.outWindow.CreatePane(ref customGuid, customTitle, 1, 1);
-            this.outWindow.GetPane(ref customGuid, out ercLogWindowPane);
-
-            var methodInfo = GetType().GetMethod("Log");
-            Lua.RegisterFunction("erc.log", this, methodInfo);
-
-            methodInfo = GetType().GetMethod("ActivateLogWindowPane");
-            Lua.RegisterFunction("erc.activatelogview", this, methodInfo);
-        }
-
-        public void Log(object obj)
-        {
-            if (obj == null)
-            {
-                this.ercLogWindowPane.OutputString("--null--" + Environment.NewLine);
-            }
-            else
-            {
-                this.ercLogWindowPane.OutputString(string.Format("{0}{1}", obj, Environment.NewLine));
-            }
-        }
-
-        private void RegisterDte()
-        {
-            var methodInfo = GetType().GetProperty("DTE").GetMethod;
-            Lua.RegisterFunction("erc._editor.vs.dte", this, methodInfo);
-        }
-
-        public void ActivateLogWindowPane()
-        {
-            this.ercLogWindowPane.Activate();
-        }
-
-        private void RegisterCast()
-        {
-            // http://stackoverflow.com/a/4925762/157260
-            var methodInfo = GetType().GetMethod("DynamicCastTo");
-            Lua.RegisterFunction("erc._editor.vs.cast", methodInfo);
-        }
-
-        public static T CastTo<T>(object obj, bool safeCast) where T : class
-        {
-            try
-            {
-                return (T)obj;
-            }
-            catch
-            {
-                if (safeCast) return null;
-                else throw;
-            }
-        }
-
-        public static dynamic DynamicCastTo(object obj, Type castTo, bool safeCast)
-        {
-            MethodInfo castMethod = typeof(VsErcPackage).GetMethod("CastTo").MakeGenericMethod(castTo);
-            return castMethod.Invoke(null, new object[] { obj, safeCast });
+            var lua = new Lua();
+            lua.LoadCLRPackage();
+            ercBindings = new ErcBindings(lua, ErcBindings.DefaultErcFilePath);
+            ErcBindings.Initialize();
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (Lua != null)
-            {
-                Lua.Dispose();
-            }
-
             base.Dispose(disposing);
+            ercBindings.Dispose();
         }
 
-        public static string GetErcFilePath()
+        public static T GetGlobalService<T>(Type type = null) where T : class
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".erc");
+            return GetGlobalService(type ?? typeof(T)) as T;
         }
-
-        private void LoadScriptFiles()
-        {
-            var initScript = Path.Combine(AssemblyDirectory, "scripts", "init.lua");
-            try
-            {
-                Lua.DoFile(initScript);
-            }
-            catch (Exception ex)
-            {
-                Log(ex.Message);
-                Log(ex.StackTrace);
-                MessageBox.Show(ex.Message, "VsErc Init Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        static public string AssemblyDirectory
-        {
-            get
-            {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                var uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
-            }
-        }
-
     }
 }

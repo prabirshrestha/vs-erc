@@ -134,7 +134,23 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bindings\Erc\Editor\ErcEditorVersionBindings.cs" />
+    <Compile Include="Bindings\Erc\Editor\ErcNameBindings.cs" />
+    <Compile Include="Bindings\Erc\Editor\Vs\Events\ErcEditorVsEventsWpfTextviewCreationListener.cs" />
+    <Compile Include="Bindings\Erc\ErcVersionBindings.cs" />
+    <Compile Include="Bindings\Erc\Editor\Vs\ErcEditorVsAssemblies.cs" />
+    <Compile Include="Bindings\Erc\Editor\Vs\ErcEditorVsDteBindings.cs" />
+    <Compile Include="Bindings\Erc\ErcLogBindings.cs" />
+    <Compile Include="Bindings\GetterBinding.cs" />
+    <Compile Include="Bindings\Erc\ErcMyErcBindings.cs" />
+    <Compile Include="Bindings\IBinding.cs" />
+    <Compile Include="Bindings\Erc\ErcNameBindings.cs" />
+    <Compile Include="Bindings\ErcBindings.cs" />
+    <Compile Include="Bindings\MethodBinding.cs" />
+    <Compile Include="Bindings\ValueBinding.cs" />
     <Compile Include="Guids.cs" />
+    <Compile Include="netfx\System\Guard.cs" />
+    <Compile Include="netfx\System\Reflection\Reflect.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -142,9 +158,6 @@
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Content Include="scripts\events\init.lua">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="scripts\events\onclose.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Compile Include="Vs\VsWpfTextViewCreationListener.cs" />
@@ -178,13 +191,8 @@
     <Content Include="scripts\statusbar.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="scripts\events\onload.lua">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="scripts\events\onactivated.lua">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="scripts\events\ondeactivated.lua">
+    <None Include="packages.config" />
+    <Content Include="scripts\events\_vswpftextviewcreated.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
@@ -199,6 +207,9 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Resources\Package.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>

@@ -1,19 +1,23 @@
-﻿erc._events = {}
-erc._editor.vs.events = {}
+﻿
+erc.editor._events = {}
 
-erc._editor.vs.events._list = {}
-	
 function erc.on (name, callback)
 	if callback then
 		local event = {}
 		event[name] = callback
-		table.insert(erc._editor.vs.events._list, event)
+		table.insert(erc.editor._events, event)
 	else
-		table.insert(erc._editor.vs.events._list, name)
+		table.insert(erc.editor._events, name)
 	end
 end
 
-require('events/onload')
-require('events/onclose')
-require('events/onactivated')
-require('events/ondeactivated')
+function erc.emit (name, ...)
+	for i,v in ipairs(erc.editor._events) do
+		local callback = v[name]
+        if(callback) then
+            callback(...)
+        end
+    end
+end
+
+require('events/_vswpftextviewcreated')
