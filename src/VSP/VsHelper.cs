@@ -4,6 +4,7 @@ using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using VSP.Comands;
 using VSP.Events;
 
@@ -53,6 +54,20 @@ namespace VSP
         public DTE2 DTE
         {
             get { return sdte; }
+        }
+
+        private IVsRunningDocumentTable runningDocumentTable;
+        public IVsRunningDocumentTable RunningDocumentTable
+        {
+            get
+            {
+                if (runningDocumentTable == null)
+                {
+                    runningDocumentTable = GetGlobalService<IVsRunningDocumentTable>(typeof(SVsRunningDocumentTable));
+                }
+
+                return runningDocumentTable;
+            }
         }
 
         public object GetGlobalService(Type type)

@@ -11,7 +11,7 @@ namespace PrabirShrestha.VsErc.Bindings.Erc.Editor.Vs.Events
     {
         public void TextViewCreated(IWpfTextView textView)
         {
-            VsErcPackage.ErcBindings.EmitFunction.Call("_vswpftextviewcreated", textView);
+            //VsErcPackage.ErcBindings.EmitFunction.Call("_vswpftextviewcreated", textView);
         }
     }
 }

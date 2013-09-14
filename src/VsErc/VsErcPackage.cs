@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
@@ -55,10 +56,14 @@ namespace PrabirShrestha.VsErc
             base.Initialize();
             Instance = this;
 
-            var lua = new Lua();
-            lua.LoadCLRPackage();
-            ercBindings = new ErcBindings(lua, ErcBindings.DefaultErcFilePath);
-            ErcBindings.Initialize();
+            VsHelper.Events.PostSave += (sender, args) => {
+                Debug.WriteLine(args.FilePath);
+            };
+
+            //var lua = new Lua();
+            //lua.LoadCLRPackage();
+            //ercBindings = new ErcBindings(lua, ErcBindings.DefaultErcFilePath);
+            //ErcBindings.Initialize();
         }
 
         protected override void Dispose(bool disposing)
