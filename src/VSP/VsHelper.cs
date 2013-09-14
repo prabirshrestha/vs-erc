@@ -70,6 +70,20 @@ namespace VSP
             }
         }
 
+        private IVsSolution vsSolution;
+        public IVsSolution VsSolution
+        {
+            get
+            {
+                if (vsSolution == null)
+                {
+                    vsSolution = GetGlobalService<IVsSolution>(typeof(SVsSolution));
+                }
+
+                return vsSolution;
+            }
+        }
+
         public object GetGlobalService(Type type)
         {
             return GetService(GlobalServiceProvider, type.GUID, false);

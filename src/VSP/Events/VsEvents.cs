@@ -7,6 +7,7 @@ namespace VSP.Events
     {
         private readonly VsHelper vsHelper;
         private readonly DocumentListener documentListener;
+        private readonly SolutionListener solutionListener;
 
         public VsHelper VsHelper
         {
@@ -16,10 +17,14 @@ namespace VSP.Events
         public event EventHandler<PreSaveEventArgs> PreSave;
         public event EventHandler<PostSaveEventArgs> PostSave;
 
+        public event EventHandler<PostSolutionOpenEventArgs> PostSolutionOpen; 
+        public event EventHandler<QueryCloseSolutionEventArgs> QueryCloseSolution; 
+
         public VsEvents(VsHelper vsHelper)
         {
             this.vsHelper = vsHelper;
             this.documentListener = new DocumentListener(this);
+            this.solutionListener = new SolutionListener(this);
         }
 
         internal void TriggerPreSave(PreSaveEventArgs args)
@@ -30,11 +35,27 @@ namespace VSP.Events
             }
         }
 
-        public void TriggerPostSave(PostSaveEventArgs args)
+        internal void TriggerPostSave(PostSaveEventArgs args)
         {
             if (PostSave != null)
             {
                 PostSave(this, args);
+            }
+        }
+
+        internal void TriggerPostSolutionOpen(PostSolutionOpenEventArgs args)
+        {
+            if (PostSolutionOpen != null)
+            {
+                PostSolutionOpen(this, args);
+            }
+        }
+
+        internal void TriggerQueryCloseSolution(QueryCloseSolutionEventArgs args)
+        {
+            if (QueryCloseSolution != null)
+            {
+                QueryCloseSolution(this, args);
             }
         }
     }

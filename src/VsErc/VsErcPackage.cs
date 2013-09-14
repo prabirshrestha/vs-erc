@@ -56,8 +56,20 @@ namespace PrabirShrestha.VsErc
             base.Initialize();
             Instance = this;
 
+            VsHelper.Events.PreSave += (sender, args) => {
+                Debug.WriteLine("pre save " + args.FilePath);
+            };
+
             VsHelper.Events.PostSave += (sender, args) => {
-                Debug.WriteLine(args.FilePath);
+                Debug.WriteLine("post save " + args.FilePath);
+            };
+
+            VsHelper.Events.PostSolutionOpen += (sender, args) => {
+                Debug.WriteLine("post solution open " + args.FilePath);
+            };
+
+            VsHelper.Events.QueryCloseSolution += (sender, args) => {
+                Debug.WriteLine("query colse solution " + args.FilePath);
             };
 
             //var lua = new Lua();
