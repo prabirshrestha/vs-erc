@@ -18,7 +18,9 @@ namespace VSP.Events
         public event EventHandler<PostSaveEventArgs> PostSave;
 
         public event EventHandler<PostSolutionOpenEventArgs> PostSolutionOpen; 
-        public event EventHandler<QueryCloseSolutionEventArgs> QueryCloseSolution; 
+        public event EventHandler<QueryCloseSolutionEventArgs> QueryCloseSolution;
+        public event EventHandler<PreSolutionCloseEventArgs> PreSolutionClose;
+        public event EventHandler<PostSolutionCloseEventArgs> PostSolutionClose; 
 
         public VsEvents(VsHelper vsHelper)
         {
@@ -56,6 +58,22 @@ namespace VSP.Events
             if (QueryCloseSolution != null)
             {
                 QueryCloseSolution(this, args);
+            }
+        }
+
+        internal void TriggerPreSolutionClose(PreSolutionCloseEventArgs args)
+        {
+            if (PreSolutionClose != null)
+            {
+                PreSolutionClose(this, args);
+            }
+        }
+
+        internal void TriggerPostSolutionClose(PostSolutionCloseEventArgs args)
+        {
+            if (PostSolutionClose != null)
+            {
+                PostSolutionClose(this, args);
             }
         }
     }

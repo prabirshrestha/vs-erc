@@ -72,6 +72,12 @@ namespace PrabirShrestha.VsErc
                 Debug.WriteLine("query colse solution " + args.FilePath);
             };
 
+            VsHelper.Events.PreSolutionClose += (sender, args) =>
+                Debug.WriteLine("pre solution close " + args.FilePath);
+
+            VsHelper.Events.PostSolutionClose += (sender, args) =>
+                Debug.WriteLine("post solution close " + args.FilePath);
+
             //var lua = new Lua();
             //lua.LoadCLRPackage();
             //ercBindings = new ErcBindings(lua, ErcBindings.DefaultErcFilePath);

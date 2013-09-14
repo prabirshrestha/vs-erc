@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio;
+﻿using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 
 namespace VSP.Events.Vs
@@ -77,11 +76,25 @@ namespace VSP.Events.Vs
 
         public int OnBeforeCloseSolution(object pUnkReserved)
         {
+            var args = new PreSolutionCloseEventArgs(this.events);
+
+            var solution = this.events.VsHelper.DTE.Solution;
+            args.FilePath = solution.FullName;
+            args.Solution = solution;
+            this.events.TriggerPreSolutionClose(args);
+
             return VSConstants.S_OK;
         }
 
         public int OnAfterCloseSolution(object pUnkReserved)
         {
+            var args = new PostSolutionCloseEventArgs(this.events);
+
+            var solution = this.events.VsHelper.DTE.Solution;
+            args.FilePath = solution.FullName;
+            args.Solution = solution;
+            this.events.TriggerPostSolutionClose(args);
+
             return VSConstants.S_OK;
         }
     }

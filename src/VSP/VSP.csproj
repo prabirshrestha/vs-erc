@@ -41,6 +41,8 @@
   <ItemGroup>
     <Compile Include="Comands\VsCommands.cs" />
     <Compile Include="Events\PostSaveEventArgs.cs" />
+    <Compile Include="Events\PostSolutionCloseEventArgs.cs" />
+    <Compile Include="Events\PreSolutionCloseEventArgs.cs" />
     <Compile Include="Events\QueryCloseSolutionEventArgs.cs" />
     <Compile Include="Events\PostSolutionOpenEventArgs.cs" />
     <Compile Include="Events\PreSaveEventArgs.cs" />
