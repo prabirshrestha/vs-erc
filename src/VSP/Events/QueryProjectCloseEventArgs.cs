@@ -2,7 +2,7 @@
 
 namespace VSP.Events
 {
-    public class QueryCloseProjectEventArgs
+    public class QueryProjectCloseEventArgs
     {
         private readonly VsEvents events;
 
@@ -14,7 +14,7 @@ namespace VSP.Events
             }
         }
 
-        public QueryCloseProjectEventArgs(VsEvents vsEvents)
+        public QueryProjectCloseEventArgs(VsEvents vsEvents)
         {
             this.events = vsEvents;
         }

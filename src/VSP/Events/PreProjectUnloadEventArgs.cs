@@ -2,7 +2,7 @@
 
 namespace VSP.Events
 {
-    public class QueryUnloadProjectEventArgs
+    public class PreProjectUnloadEventArgs
     {
         private readonly VsEvents events;
 
@@ -14,7 +14,7 @@ namespace VSP.Events
             }
         }
 
-        public QueryUnloadProjectEventArgs(VsEvents vsEvents)
+        public PreProjectUnloadEventArgs(VsEvents vsEvents)
         {
             this.events = vsEvents;
         }
@@ -27,9 +27,6 @@ namespace VSP.Events
             }
         }
 
-        public bool UnloadProject { get; set; }
-
         public Project Project { get; set; }
-
     }
 }

@@ -2,7 +2,7 @@
 
 namespace VSP.Events
 {
-    public class QuerySolutionCloseEventArgs
+    public class QueryProjectUnloadEventArgs
     {
         private readonly VsEvents events;
 
@@ -14,7 +14,7 @@ namespace VSP.Events
             }
         }
 
-        public QuerySolutionCloseEventArgs(VsEvents vsEvents)
+        public QueryProjectUnloadEventArgs(VsEvents vsEvents)
         {
             this.events = vsEvents;
         }
@@ -23,13 +23,13 @@ namespace VSP.Events
         {
             get
             {
-                return Solution.FullName;
+                return Project.FullName;
             }
         }
 
-        public bool CloseSolution { get; set; }
+        public bool UnloadProject { get; set; }
 
-        public Solution Solution { get; set; }
+        public Project Project { get; set; }
 
     }
 }

@@ -68,7 +68,7 @@ namespace PrabirShrestha.VsErc
                 Debug.WriteLine("post solution open " + args.FilePath);
             };
 
-            VsHelper.Events.QueryCloseSolution += (sender, args) => {
+            VsHelper.Events.QuerySolutionClose += (sender, args) => {
                 Debug.WriteLine("query colse solution " + args.FilePath);
             };
 
@@ -81,13 +81,13 @@ namespace PrabirShrestha.VsErc
             VsHelper.Events.PostProjectOpen += (sender, args) =>
                 Debug.WriteLine("post project open " + args.FilePath + " " + args.Added);
 
-            VsHelper.Events.QueryCloseProject += (sender, args) =>
+            VsHelper.Events.QueryProjectClose += (sender, args) =>
                 Debug.WriteLine("query close project " + args.FilePath + " " + args.Removing);
 
             VsHelper.Events.PreProjectClose += (sender, args) =>
                 Debug.WriteLine("pre close project " + args.FilePath + " " + args.Removed);
 
-            VsHelper.Events.QueryUnloadProject += (sender, args) =>
+            VsHelper.Events.QueryProjectUnload += (sender, args) =>
                  Debug.WriteLine("query unload project " + args.FilePath + " " + args.UnloadProject);
 
             //var lua = new Lua();

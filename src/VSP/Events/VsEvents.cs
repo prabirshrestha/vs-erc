@@ -18,14 +18,15 @@ namespace VSP.Events
         public event EventHandler<PostSaveEventArgs> PostSave;
 
         public event EventHandler<PostSolutionOpenEventArgs> PostSolutionOpen;
-        public event EventHandler<QueryCloseSolutionEventArgs> QueryCloseSolution;
+        public event EventHandler<QuerySolutionCloseEventArgs> QuerySolutionClose;
         public event EventHandler<PreSolutionCloseEventArgs> PreSolutionClose;
         public event EventHandler<PostSolutionCloseEventArgs> PostSolutionClose;
 
         public event EventHandler<PostProjectOpenEventArgs> PostProjectOpen;
-        public event EventHandler<QueryCloseProjectEventArgs> QueryCloseProject;
+        public event EventHandler<QueryProjectCloseEventArgs> QueryProjectClose;
         public event EventHandler<PreProjectCloseEventArgs> PreProjectClose;
-        public event EventHandler<QueryUnloadProjectEventArgs> QueryUnloadProject;
+        public event EventHandler<QueryProjectUnloadEventArgs> QueryProjectUnload;
+        public event EventHandler<PreProjectUnloadEventArgs> PreProjectUnload;
 
         public VsEvents(VsHelper vsHelper)
         {
@@ -58,11 +59,11 @@ namespace VSP.Events
             }
         }
 
-        internal void TriggerQueryCloseSolution(QueryCloseSolutionEventArgs args)
+        internal void TriggerQuerySolutionClose(QuerySolutionCloseEventArgs args)
         {
-            if (QueryCloseSolution != null)
+            if (QuerySolutionClose != null)
             {
-                QueryCloseSolution(this, args);
+                QuerySolutionClose(this, args);
             }
         }
 
@@ -90,11 +91,11 @@ namespace VSP.Events
             }
         }
 
-        internal void TriggerQueryCloseProject(QueryCloseProjectEventArgs args)
+        internal void TriggerQueryProjectClose(QueryProjectCloseEventArgs args)
         {
-            if (QueryCloseProject != null)
+            if (QueryProjectClose != null)
             {
-                QueryCloseProject(this, args);
+                QueryProjectClose(this, args);
             }
         }
 
@@ -106,11 +107,19 @@ namespace VSP.Events
             }
         }
 
-        public void TriggerQueryUnloadProject(QueryUnloadProjectEventArgs args)
+        public void TriggerQueryProjectUnload(QueryProjectUnloadEventArgs args)
         {
-            if (QueryUnloadProject != null)
+            if (QueryProjectUnload != null)
             {
-                QueryUnloadProject(this, args);
+                QueryProjectUnload(this, args);
+            }
+        }
+
+        public void TriggerPreProjectUnload(PreProjectUnloadEventArgs args)
+        {
+            if (PreProjectUnload != null)
+            {
+                PreProjectUnload(this, args);
             }
         }
     }

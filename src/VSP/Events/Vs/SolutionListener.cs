@@ -30,14 +30,14 @@ namespace VSP.Events.Vs
 
         public int OnQueryCloseProject(IVsHierarchy pHierarchy, int fRemoving, ref int pfCancel)
         {
-            var args = new QueryCloseProjectEventArgs(this.events)
+            var args = new QueryProjectCloseEventArgs(this.events)
             {
                 CloseProject = true,
                 Project = this.events.VsHelper.GetProject(pHierarchy),
                 Removing = Convert.ToBoolean(fRemoving)
             };
 
-            this.events.TriggerQueryCloseProject(args);
+            this.events.TriggerQueryProjectClose(args);
 
             if (!args.CloseProject)
             {
@@ -67,13 +67,13 @@ namespace VSP.Events.Vs
 
         public int OnQueryUnloadProject(IVsHierarchy pRealHierarchy, ref int pfCancel)
         {
-            var args = new QueryUnloadProjectEventArgs(this.events)
+            var args = new QueryProjectUnloadEventArgs(this.events)
             {
                 Project = this.events.VsHelper.GetProject(pRealHierarchy),
                 UnloadProject = true
             };
 
-            this.events.TriggerQueryUnloadProject(args);
+            this.events.TriggerQueryProjectUnload(args);
 
             if (!args.UnloadProject)
             {
@@ -85,6 +85,13 @@ namespace VSP.Events.Vs
 
         public int OnBeforeUnloadProject(IVsHierarchy pRealHierarchy, IVsHierarchy pStubHierarchy)
         {
+            var args = new PreProjectUnloadEventArgs(this.events)
+            {
+                Project = this.events.VsHelper.GetProject(pRealHierarchy),
+            };
+
+            this.events.TriggerPreProjectUnload(args);
+
             return VSConstants.S_OK;
         }
 
@@ -102,13 +109,13 @@ namespace VSP.Events.Vs
 
         public int OnQueryCloseSolution(object pUnkReserved, ref int pfCancel)
         {
-            var args = new QueryCloseSolutionEventArgs(this.events)
+            var args = new QuerySolutionCloseEventArgs(this.events)
             {
                 CloseSolution = true,
                 Solution = this.events.VsHelper.DTE.Solution
             };
 
-            this.events.TriggerQueryCloseSolution(args);
+            this.events.TriggerQuerySolutionClose(args);
 
             if (!args.CloseSolution)
             {
