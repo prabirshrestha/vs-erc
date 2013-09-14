@@ -56,6 +56,7 @@
     <Compile Include="Events\VsEvents.cs" />
     <Compile Include="Events\Vs\DocumentListener.cs" />
     <Compile Include="Events\Vs\ProjectDocumensListener.cs" />
+    <Compile Include="Events\Vs\ProjectRetargettingListener.cs" />
     <Compile Include="Events\Vs\SolutionListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VsHelper.cs" />

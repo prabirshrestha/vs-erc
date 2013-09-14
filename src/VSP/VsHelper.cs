@@ -125,6 +125,21 @@ namespace VSP
             }
         }
 
+        private IVsTrackProjectRetargeting vsTrackProjectRetargeting;
+        public IVsTrackProjectRetargeting VsTrackProjectRetargeting
+        {
+            get
+            {
+                if (vsTrackProjectRetargeting == null)
+                {
+                    vsTrackProjectRetargeting = GetGlobalService<IVsTrackProjectRetargeting>(typeof(SVsTrackProjectRetargeting));
+                }
+
+                return vsTrackProjectRetargeting;
+            }
+        }
+
+
         public object GetGlobalService(Type type)
         {
             return GetService(GlobalServiceProvider, type.GUID, false);

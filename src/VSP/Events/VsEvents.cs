@@ -9,6 +9,7 @@ namespace VSP.Events
         private readonly DocumentListener documentListener;
         private readonly SolutionListener solutionListener;
         private readonly ProjectDocumensListener projectDocumentListener;
+        private readonly ProjectRetargettingListener projectRetargettingListener;
 
         public VsHelper VsHelper
         {
@@ -38,6 +39,7 @@ namespace VSP.Events
             this.documentListener = new DocumentListener(this);
             this.solutionListener = new SolutionListener(this);
             this.projectDocumentListener = new ProjectDocumensListener(this);
+            this.projectRetargettingListener = new ProjectRetargettingListener(this);
         }
 
         internal void TriggerPreSave(PreSaveEventArgs args)
