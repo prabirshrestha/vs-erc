@@ -40,6 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Comands\VsCommands.cs" />
+    <Compile Include="Events\PostProjectLoadEventArgs.cs" />
     <Compile Include="Events\PostSaveEventArgs.cs" />
     <Compile Include="Events\PostSolutionCloseEventArgs.cs" />
     <Compile Include="Events\PostProjectOpenEventArgs.cs" />

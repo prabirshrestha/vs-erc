@@ -90,6 +90,9 @@ namespace PrabirShrestha.VsErc
             VsHelper.Events.QueryProjectUnload += (sender, args) =>
                  Debug.WriteLine("query unload project " + args.FilePath + " " + args.UnloadProject);
 
+            VsHelper.Events.PostProjectLoad += (sender, args) =>
+                Debug.WriteLine("post project load " + args.FilePath);
+
             //var lua = new Lua();
             //lua.LoadCLRPackage();
             //ercBindings = new ErcBindings(lua, ErcBindings.DefaultErcFilePath);

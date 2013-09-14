@@ -62,6 +62,13 @@ namespace VSP.Events.Vs
 
         public int OnAfterLoadProject(IVsHierarchy pStubHierarchy, IVsHierarchy pRealHierarchy)
         {
+            var args = new PostProjectLoadEventArgs(this.events)
+            {
+                Project = this.events.VsHelper.GetProject(pRealHierarchy),
+            };
+
+            this.events.TriggerPostProjectLoad(args);
+
             return VSConstants.S_OK;
         }
 
