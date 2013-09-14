@@ -39,12 +39,12 @@
     <AssemblyOriginatorKeyFile>vsp.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Comands\VsCommands.cs" />
+    <Compile Include="Events\VsEvents.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VSP.cs" />
+    <Compile Include="VsHelper.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Events\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />

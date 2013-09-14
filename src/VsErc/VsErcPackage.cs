@@ -31,16 +31,16 @@ namespace PrabirShrestha.VsErc
     {
         private static ErcBindings ercBindings;
 
-        private readonly VSHelper vsHelper;
+        private readonly VsHelper vsHelper;
 
-        public VSHelper VsHelper
+        public VsHelper VsHelper
         {
             get { return vsHelper; }
         }
 
         public VsErcPackage()
         {
-            vsHelper = new VSHelper(this);
+            vsHelper = new VsHelper(this);
         }
 
         public static ErcBindings ErcBindings
