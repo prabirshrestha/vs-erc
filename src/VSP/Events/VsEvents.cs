@@ -25,6 +25,7 @@ namespace VSP.Events
         public event EventHandler<PostProjectOpenEventArgs> PostProjectOpen;
         public event EventHandler<QueryCloseProjectEventArgs> QueryCloseProject;
         public event EventHandler<PreProjectCloseEventArgs> PreProjectClose;
+        public event EventHandler<QueryUnloadProjectEventArgs> QueryUnloadProject;
 
         public VsEvents(VsHelper vsHelper)
         {
@@ -102,6 +103,14 @@ namespace VSP.Events
             if (PreProjectClose != null)
             {
                 PreProjectClose(this, args);
+            }
+        }
+
+        public void TriggerQueryUnloadProject(QueryUnloadProjectEventArgs args)
+        {
+            if (QueryUnloadProject != null)
+            {
+                QueryUnloadProject(this, args);
             }
         }
     }

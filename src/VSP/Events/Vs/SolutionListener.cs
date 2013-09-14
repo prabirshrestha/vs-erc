@@ -17,10 +17,12 @@ namespace VSP.Events.Vs
 
         public int OnAfterOpenProject(IVsHierarchy pHierarchy, int fAdded)
         {
-            var args = new PostProjectOpenEventArgs(this.events);
+            var args = new PostProjectOpenEventArgs(this.events)
+            {
+                Project = this.events.VsHelper.GetProject(pHierarchy),
+                Added = Convert.ToBoolean(fAdded)
+            };
 
-            args.Project = this.events.VsHelper.GetProject(pHierarchy);
-            args.Added = Convert.ToBoolean(fAdded);
             this.events.TriggerPostProjectOpen(args);
 
             return VSConstants.S_OK;
@@ -65,6 +67,19 @@ namespace VSP.Events.Vs
 
         public int OnQueryUnloadProject(IVsHierarchy pRealHierarchy, ref int pfCancel)
         {
+            var args = new QueryUnloadProjectEventArgs(this.events)
+            {
+                Project = this.events.VsHelper.GetProject(pRealHierarchy),
+                UnloadProject = true
+            };
+
+            this.events.TriggerQueryUnloadProject(args);
+
+            if (!args.UnloadProject)
+            {
+                pfCancel = 1;
+            }
+
             return VSConstants.S_OK;
         }
 

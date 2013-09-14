@@ -46,6 +46,7 @@
     <Compile Include="Events\PreProjectCloseEventArgs.cs" />
     <Compile Include="Events\PreSolutionCloseEventArgs.cs" />
     <Compile Include="Events\QueryCloseProjectEventArgs.cs" />
+    <Compile Include="Events\QueryUnloadProjectEventArgs.cs" />
     <Compile Include="Events\QueryCloseSolutionEventArgs.cs" />
     <Compile Include="Events\PostSolutionOpenEventArgs.cs" />
     <Compile Include="Events\PreSaveEventArgs.cs" />
