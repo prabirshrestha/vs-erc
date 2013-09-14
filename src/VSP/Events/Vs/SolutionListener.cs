@@ -47,6 +47,14 @@ namespace VSP.Events.Vs
 
         public int OnBeforeCloseProject(IVsHierarchy pHierarchy, int fRemoved)
         {
+            var args = new PreProjectCloseEventArgs(this.events)
+            {
+                Project = this.events.VsHelper.GetProject(pHierarchy),
+                Removed = Convert.ToBoolean(fRemoved)
+            };
+
+            this.events.TriggerPreProjectClose(args);
+
             return VSConstants.S_OK;
         }
 

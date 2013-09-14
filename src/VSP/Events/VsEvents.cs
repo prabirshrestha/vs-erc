@@ -17,13 +17,14 @@ namespace VSP.Events
         public event EventHandler<PreSaveEventArgs> PreSave;
         public event EventHandler<PostSaveEventArgs> PostSave;
 
-        public event EventHandler<PostSolutionOpenEventArgs> PostSolutionOpen; 
+        public event EventHandler<PostSolutionOpenEventArgs> PostSolutionOpen;
         public event EventHandler<QueryCloseSolutionEventArgs> QueryCloseSolution;
         public event EventHandler<PreSolutionCloseEventArgs> PreSolutionClose;
         public event EventHandler<PostSolutionCloseEventArgs> PostSolutionClose;
 
-        public event EventHandler<PostProjectOpenEventArgs> PostProjectOpen; 
+        public event EventHandler<PostProjectOpenEventArgs> PostProjectOpen;
         public event EventHandler<QueryCloseProjectEventArgs> QueryCloseProject;
+        public event EventHandler<PreProjectCloseEventArgs> PreProjectClose;
 
         public VsEvents(VsHelper vsHelper)
         {
@@ -93,6 +94,14 @@ namespace VSP.Events
             if (QueryCloseProject != null)
             {
                 QueryCloseProject(this, args);
+            }
+        }
+
+        public void TriggerPreProjectClose(PreProjectCloseEventArgs args)
+        {
+            if (PreProjectClose != null)
+            {
+                PreProjectClose(this, args);
             }
         }
     }
