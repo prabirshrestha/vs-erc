@@ -1,24 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
-  <PropertyGroup>
-    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-  </PropertyGroup>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E349BD0D-F90F-42EB-8687-44CC44584E74}</ProjectGuid>
-    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{2851E3B0-913F-42A0-9D14-43F9D4DB31F8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PrabirShrestha.VsErc</RootNamespace>
-    <AssemblyName>VsErc</AssemblyName>
-    <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>VSP</RootNamespace>
+    <AssemblyName>VSP</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,15 +30,22 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>vsp.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="KeraLua">
-      <HintPath>..\..\bin\KeraLua.dll</HintPath>
-    </Reference>
-    <Reference Include="KopiLua">
-      <HintPath>..\..\bin\KopiLua.dll</HintPath>
-    </Reference>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VSP.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Events\" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.OLE.Interop" />
@@ -61,9 +62,6 @@
     <Reference Include="Microsoft.VisualStudio.Shell.12.0" />
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0" />
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.11.0" />
-    <Reference Include="NLua">
-      <HintPath>..\..\bin\NLua.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -134,94 +132,9 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bindings\Erc\Editor\ErcEditorVersionBindings.cs" />
-    <Compile Include="Bindings\Erc\Editor\ErcNameBindings.cs" />
-    <Compile Include="Bindings\Erc\Editor\Vs\Events\DocumentListener.cs" />
-    <Compile Include="Bindings\Erc\Editor\Vs\Events\ErcEditorVsEventsWpfTextviewCreationListener.cs" />
-    <Compile Include="Bindings\Erc\ErcVersionBindings.cs" />
-    <Compile Include="Bindings\Erc\Editor\Vs\ErcEditorVsAssemblies.cs" />
-    <Compile Include="Bindings\Erc\Editor\Vs\ErcEditorVsDteBindings.cs" />
-    <Compile Include="Bindings\Erc\ErcLogBindings.cs" />
-    <Compile Include="Bindings\GetterBinding.cs" />
-    <Compile Include="Bindings\Erc\ErcMyErcBindings.cs" />
-    <Compile Include="Bindings\IBinding.cs" />
-    <Compile Include="Bindings\Erc\ErcNameBindings.cs" />
-    <Compile Include="Bindings\ErcBindings.cs" />
-    <Compile Include="Bindings\MethodBinding.cs" />
-    <Compile Include="Bindings\ValueBinding.cs" />
-    <Compile Include="Guids.cs" />
-    <Compile Include="netfx\System\Guard.cs" />
-    <Compile Include="netfx\System\Reflection\Reflect.cs" />
-    <Compile Include="Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="GlobalSuppressions.cs" />
-    <Content Include="scripts\events\init.lua">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="scripts\settimeout.lua">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Compile Include="VsErcPackage.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="vsp.snk" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="VSPackage.resx">
-      <MergeWithCTO>true</MergeWithCTO>
-      <ManifestResourceName>VSPackage</ManifestResourceName>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="scripts\init.lua">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="scripts\messagebox.lua">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="scripts\clipboard.lua">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="scripts\statusbar.lua">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <None Include="packages.config" />
-    <Content Include="scripts\events\_vswpftextviewcreated.lua">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <None Include="source.extension.vsixmanifest">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Key.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="lua52.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Resources\Package.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\VSP\VSP.csproj">
-      <Project>{2851E3B0-913F-42A0-9D14-43F9D4DB31F8}</Project>
-      <Name>VSP</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <PropertyGroup>
-    <UseCodebase>true</UseCodebase>
-  </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

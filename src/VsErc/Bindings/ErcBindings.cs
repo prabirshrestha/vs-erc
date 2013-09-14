@@ -57,8 +57,7 @@ namespace PrabirShrestha.VsErc.Bindings
 
             new Erc.Editor.Vs.ErcEditorVsDteBindings().Bind(this);
             new Erc.Editor.Vs.ErcEditorVsAssemblies().Bind(this);
-
-            Lua.NewTable("erc.editor.vs._events");
+            new Erc.Editor.Vs.Events.DocumentListener().Bind(this);
         }
 
         private void LoadScriptFiles()

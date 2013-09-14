@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
 using NLua;
 using PrabirShrestha.VsErc.Bindings;
+using VSP;
 
 namespace PrabirShrestha.VsErc
 {
@@ -29,6 +30,18 @@ namespace PrabirShrestha.VsErc
     public sealed class VsErcPackage : Package
     {
         private static ErcBindings ercBindings;
+
+        private readonly VSHelper vsHelper;
+
+        public VSHelper VsHelper
+        {
+            get { return vsHelper; }
+        }
+
+        public VsErcPackage()
+        {
+            vsHelper = new VSHelper(this);
+        }
 
         public static ErcBindings ErcBindings
         {
