@@ -134,15 +134,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BindingsOld\Erc\Editor\Vs\Events\DocumentListener.cs" />
-    <None Include="BindingsOld\Erc\Editor\Vs\Events\ErcEditorVsEventsWpfTextviewCreationListener.cs" />
-    <None Include="BindingsOld\GetterBinding.cs" />
-    <None Include="BindingsOld\IBinding.cs" />
-    <None Include="BindingsOld\ErcBindings.cs" />
-    <None Include="BindingsOld\MethodBinding.cs" />
-    <None Include="BindingsOld\ValueBinding.cs" />
     <Compile Include="Guids.cs" />
-    <Compile Include="LuaBindings\IBindings.cs" />
     <Compile Include="LuaBindings\VsErcBindings.cs" />
     <Compile Include="netfx\System\Guard.cs" />
     <Compile Include="netfx\System\Reflection\Reflect.cs" />
