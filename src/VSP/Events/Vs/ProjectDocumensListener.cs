@@ -49,6 +49,13 @@ namespace VSP.Events.Vs
         public int OnAfterAddDirectoriesEx(int cProjects, int cDirectories, IVsProject[] rgpProjects, int[] rgFirstIndices,
             string[] rgpszMkDocuments, VSADDDIRECTORYFLAGS[] rgFlags)
         {
+            var args = new PostProjectAddDirectoriesEventArgs(this.events);
+
+            //VSQUERYADDFILERESULTS.VSQUERYADDFILERESULTS_AddOK;
+            //VSQUERYADDFILERESULTS.VSQUERYADDFILERESULTS_AddNotOK;
+
+            this.events.TriggerPostProjectAddDirectories(args);
+
             return VSConstants.S_OK;
         }
 
