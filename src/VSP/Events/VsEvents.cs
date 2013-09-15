@@ -16,6 +16,8 @@ namespace VSP.Events
             get { return this.vsHelper; }
         }
 
+        public event EventHandler<WpfTextViewCreatedEventArgs> WpfTextViewCreated; 
+
         public event EventHandler<PreSaveEventArgs> PreSave;
         public event EventHandler<PostSaveEventArgs> PostSave;
         public event EventHandler<PreDocumentWindowShowEventArgs> PreDocumentWindowShow;
@@ -37,7 +39,8 @@ namespace VSP.Events
         public event EventHandler<PostProjectAddFilesEventArgs> PostProjectAddFiles; 
         public event EventHandler<PostProjectAddDirectoriesEventArgs> PostProjectAddDirectories;
         public event EventHandler<PostProjectRemoveFilesEventArgs> PostProjectRemoveFiles;
-        public event EventHandler<PostProjectRemoveDirectoriesEventArgs> PostProjectRemoveDirectories; 
+        public event EventHandler<PostProjectRemoveDirectoriesEventArgs> PostProjectRemoveDirectories;
+        public event EventHandler<QueryProjectRenameFilesEventArgs> QueryProjectRenameFiles; 
 
         public string[] Files { get; set; }
 
@@ -49,6 +52,15 @@ namespace VSP.Events
             this.projectDocumentListener = new ProjectDocumensListener(this);
             this.projectRetargettingListener = new ProjectRetargettingListener(this);
         }
+
+        internal void TriggerWpfTextViewCreated(WpfTextViewCreatedEventArgs args)
+        {
+            if (WpfTextViewCreated != null)
+            {
+                WpfTextViewCreated(this, args);
+            }
+        }
+
 
         internal void TriggerPreSave(PreSaveEventArgs args)
         {
@@ -199,6 +211,14 @@ namespace VSP.Events
             if (PostProjectRemoveDirectories != null)
             {
                 PostProjectRemoveDirectories(this, args);
+            }
+        }
+
+        public void TriggerQueryProjectRenameFiles(QueryProjectRenameFilesEventArgs args)
+        {
+            if (QueryProjectRenameFiles != null)
+            {
+                QueryProjectRenameFiles(this, args);
             }
         }
     }

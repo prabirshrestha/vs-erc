@@ -14,18 +14,18 @@ function print( ... )
 	erc._log(printResult)
 end
 
--- function _dumptable(o)
--- 	if type(o) == 'table' then
--- 		local s = '{ '
--- 		for k,v in pairs(o) do
--- 			if type(k) ~= 'number' then k = '"'..k..'"' end
--- 			s = s .. '['..k..'] = ' .. dump(v) .. ','
--- 		end
--- 		return s .. '} '
--- 	else
--- 		return tostring(o)
--- 	end
--- end
+function _dump(o)
+	if type(o) == 'table' then
+		local s = '{ '
+		for k,v in pairs(o) do
+			if type(k) ~= 'number' then k = '"'..k..'"' end
+			s = s .. '['..k..'] = ' .. dump(v) .. ','
+		end
+		return s .. '} '
+	else
+		return tostring(o)
+	end
+end
 
 
 local function scriptPath()

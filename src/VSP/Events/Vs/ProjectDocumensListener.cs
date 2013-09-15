@@ -94,6 +94,17 @@ namespace VSP.Events.Vs
         public int OnQueryRenameFiles(IVsProject pProject, int cFiles, string[] rgszMkOldNames, string[] rgszMkNewNames,
             VSQUERYRENAMEFILEFLAGS[] rgFlags, VSQUERYRENAMEFILERESULTS[] pSummaryResult, VSQUERYRENAMEFILERESULTS[] rgResults)
         {
+            var args = new QueryProjectRenameFilesEventArgs(this.events)
+            {
+                OldFiles = rgszMkOldNames,
+                NewFiles = rgszMkNewNames
+            };
+
+            //VSQUERYADDFILERESULTS.VSQUERYADDFILERESULTS_AddOK;
+            //VSQUERYADDFILERESULTS.VSQUERYADDFILERESULTS_AddNotOK;
+
+            this.events.TriggerQueryProjectRenameFiles(args);
+
             return VSConstants.S_OK;
         }
 

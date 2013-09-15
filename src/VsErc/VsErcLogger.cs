@@ -21,12 +21,12 @@ namespace PrabirShrestha.VsErc
             this.EnsurePane();
         }
 
-        public void Log(string value)
+        public void Log(object value)
         {
             if (EnsurePane())
             {
                 Debug.Write(value);
-                pane.OutputString(value);
+                pane.OutputString(value == null ? "--null--" : value.ToString());
             }
         }
 

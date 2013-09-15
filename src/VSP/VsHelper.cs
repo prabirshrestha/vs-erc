@@ -26,9 +26,12 @@ namespace VSP
             get { return dte ?? (dte = ServiceProvider.GlobalProvider.GetService(typeof(DTE)) as DTE2); }
         }
 
+        public static VsHelper Instance { get; set; }
+
         public VsHelper(Package package)
         {
             this.package = package;
+            Instance = this;
             this.events = new VsEvents(this);
             this.commands = new VsCommands(this);
         }

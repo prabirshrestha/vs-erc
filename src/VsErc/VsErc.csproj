@@ -179,7 +179,7 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="packages.config" />
-    <Content Include="scripts\events\_vswpftextviewcreated.lua">
+    <Content Include="scripts\events\vs\wpftextviewcreated.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scripts\commands\init.lua">

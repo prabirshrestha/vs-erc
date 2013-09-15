@@ -3,6 +3,12 @@ local MessageBoxButtons = luanet.import_type "System.Windows.Forms.MessageBoxBut
 local MessageBoxIcon    = luanet.import_type "System.Windows.Forms.MessageBoxIcon"
 local DialogResult    	= luanet.import_type "System.Windows.Forms.DialogResult"
 
+-- erc._log(MessageBox)
+-- print(type(MessageBox))
+-- print(print(getmetatable(MessageBox)))
+local m = getmetatable(MessageBox)
+print(rawget(m, 'get_UnderlyingSystemType'))
+
 local messagebox = {}
 
 function messagebox.ok(message, title)

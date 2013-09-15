@@ -1,22 +1,25 @@
 
-erc.on('_vswpftextviewcreated', function(wpftextview)
+erc.editor.vs._vshelper.Events.WpfTextViewCreated:Add(function(o, e)
+	erc.emit('_vswpftextviewcreated', o, e)
+end)
 
-	local 	closedhandler, 
-			gotaggregatefocushandler,
+erc.on('_vswpftextviewcreated', function(o, e)
+	
+	local   wpftextview = e.WpfTextView, 
+			closedhandler,
+			gotaggregatefocushandler, 
 			lostaggregatefocushandler
 
 	function created()
 		closedhandler = wpftextview.Closed:Add(closed)
 		gotaggregatefocushandler = wpftextview.GotAggregateFocus:Add(gotaggregatefocus)
 		lostaggregatefocushandler = wpftextview.LostAggregateFocus:Add(lostaggregatefocus)
-		erc.emit('load')
 	end
 
-	function closed(sender, args)
+	function closed()
 		wpftextview.Closed:Remove(closedhandler)
-		wpftextview.GotAggregateFocus:Remove(gotaggregatefocushandler)
-		wpftextview.LostAggregateFocus:Remove(lostaggregatefocushandler)
-		erc.emit('close')
+		wpftextview.GotAggregateFocus.Remove(gotaggregatefocushandler)
+		wpftextview.LostAggregateFocus.Remove(lostaggregatefocushandler)
 	end
 
 	function gotaggregatefocus()
