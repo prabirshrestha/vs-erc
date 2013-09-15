@@ -55,6 +55,7 @@ namespace PrabirShrestha.VsErc.LuaBindings
 
             lua.RegisterFunction("erc.name", this, Reflect.GetProperty(() => Name).GetMethod);
             lua.RegisterFunction("erc.version", this, Reflect.GetProperty(() => Version).GetMethod);
+            lua.RegisterFunction("erc.platform", this, Reflect.GetProperty(() => Platform).GetMethod);
 
             lua.RegisterFunction("erc.editor.name", this, Reflect.GetProperty(() => EditorName).GetMethod);
             lua.RegisterFunction("erc.editor.version", this, Reflect.GetProperty(() => EditorVersion).GetMethod);
@@ -72,7 +73,7 @@ namespace PrabirShrestha.VsErc.LuaBindings
             }
             catch (Exception ex)
             {
-                this.package.Logger.Log(string.Format("{0}\n{1}", ex.Message,  ex.StackTrace));
+                this.package.Logger.Log(string.Format("{0}\n{1}", ex.Message, ex.StackTrace));
             }
         }
 
@@ -105,6 +106,29 @@ namespace PrabirShrestha.VsErc.LuaBindings
             get
             {
                 return this.package.VsHelper.DTE.Version;
+            }
+        }
+
+        public string Platform
+        {
+            get
+            {
+                switch (Environment.OSVersion.Platform)
+                {
+                    case PlatformID.Win32S:
+                    case PlatformID.Win32Windows:
+                    case PlatformID.Win32NT:
+                    case PlatformID.WinCE:
+                        return "win";
+                    case PlatformID.Unix:
+                        return "unix";
+                    case PlatformID.MacOSX:
+                        return "osx";
+                    case PlatformID.Xbox:
+                        return "xbox";
+                    default:
+                        return null;
+                }
             }
         }
 
