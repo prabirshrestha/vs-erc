@@ -6,6 +6,8 @@ using EnvDTE80;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Text.Editor;
+using Microsoft.VisualStudio.TextManager.Interop;
 using VSP.Comands;
 using VSP.Events;
 
@@ -170,6 +172,25 @@ namespace VSP
                     .Documents
                     .OfType<Document>()
                     .FirstOrDefault(x => x != null && x.FullName == documentName);
+        }
+
+        public IWpfTextView GetWpfTextViewFromVsWindowFrame(IVsWindowFrame vsWindowFrame)
+        {
+            IWpfTextView wpfTextView = null;
+            var vsTextView = VsShellUtilities.GetTextView(vsWindowFrame);
+
+            if (vsTextView != null)
+            {
+                object textViewHost;
+                Guid guidTextViewHost = Microsoft.VisualStudio.Editor.DefGuidList.guidIWpfTextViewHost;
+                if (((IVsUserData)vsTextView).GetData(ref guidTextViewHost, out textViewHost) == VSConstants.S_OK &&
+                    textViewHost != null)
+                {
+                    wpfTextView = ((IWpfTextViewHost)textViewHost).TextView;
+                }
+            }
+
+            return wpfTextView;
         }
 
         private IVsTrackProjectDocuments2 projectDocumentTracker2;
