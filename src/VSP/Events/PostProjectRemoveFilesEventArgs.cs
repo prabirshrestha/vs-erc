@@ -1,6 +1,6 @@
 ﻿namespace VSP.Events
 {
-    public class QueryProjectAddFilesEventArgs
+    public class PostProjectRemoveFilesEventArgs
     {
         private readonly VsEvents events;
 
@@ -12,11 +12,12 @@
             }
         }
 
-        public QueryProjectAddFilesEventArgs(VsEvents vsEvents)
+        public PostProjectRemoveFilesEventArgs(VsEvents vsEvents)
         {
             this.events = vsEvents;
         }
 
         public string[] Files { get; set; }
+
     }
 }

@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Commands\VsCommands.cs" />
     <Compile Include="Events\PostProjectAddDirectoriesEventArgs.cs" />
+    <Compile Include="Events\PostProjectRemoveFilesEventArgs.cs" />
     <Compile Include="Events\PostProjectLoadEventArgs.cs" />
     <Compile Include="Events\PostSaveEventArgs.cs" />
     <Compile Include="Events\PostSolutionCloseEventArgs.cs" />

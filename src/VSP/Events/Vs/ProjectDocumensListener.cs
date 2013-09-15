@@ -62,6 +62,16 @@ namespace VSP.Events.Vs
         public int OnAfterRemoveFiles(int cProjects, int cFiles, IVsProject[] rgpProjects, int[] rgFirstIndices,
             string[] rgpszMkDocuments, VSREMOVEFILEFLAGS[] rgFlags)
         {
+            var args = new PostProjectRemoveFilesEventArgs(this.events)
+            {
+                Files = rgpszMkDocuments
+            };
+
+            //VSQUERYADDFILERESULTS.VSQUERYADDFILERESULTS_AddOK;
+            //VSQUERYADDFILERESULTS.VSQUERYADDFILERESULTS_AddNotOK;
+
+            this.events.TriggerPostProjectRemoveFiles(args);
+
             return VSConstants.S_OK;
         }
 

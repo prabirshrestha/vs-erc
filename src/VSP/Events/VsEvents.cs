@@ -34,7 +34,9 @@ namespace VSP.Events
         public event EventHandler<PostProjectLoadEventArgs> PostProjectLoad;
 
         public event EventHandler<QueryProjectAddFilesEventArgs> QueryProjectAddFiles; 
-        public event EventHandler<PostProjectAddFilesEventArgs> PostProjectAddFiles;         public event EventHandler<PostProjectAddDirectoriesEventArgs> PostProjectAddDirectories; 
+        public event EventHandler<PostProjectAddFilesEventArgs> PostProjectAddFiles; 
+        public event EventHandler<PostProjectAddDirectoriesEventArgs> PostProjectAddDirectories;
+        public event EventHandler<PostProjectRemoveFilesEventArgs> PostProjectRemoveFiles; 
 
         public string[] Files { get; set; }
 
@@ -180,6 +182,14 @@ namespace VSP.Events
             if (PostProjectAddDirectories != null)
             {
                 PostProjectAddDirectories(this, args);
+            }
+        }
+
+        public void TriggerPostProjectRemoveFiles(PostProjectRemoveFilesEventArgs args)
+        {
+            if (PostProjectRemoveFiles != null)
+            {
+                PostProjectRemoveFiles(this, args);
             }
         }
     }

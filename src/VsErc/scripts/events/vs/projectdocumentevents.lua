@@ -10,3 +10,7 @@ end)
 erc.editor.vs._vshelper.Events.PostProjectAddDirectories:Add(function(o, e)
 	erc.emit('_vspostprojectadddirectories')
 end)
+
+erc.editor.vs._vshelper.Events.PostProjectRemoveFiles:Add(function(o, e)
+	erc.emit('_vspostprojectremovefiles')
+end)
