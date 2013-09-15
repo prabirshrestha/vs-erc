@@ -19,7 +19,7 @@ namespace VSP.Events.Vs
         {
             var args = new QueryProjectAddFilesEventArgs(this.events)
             {
-                Files = rgpszMkDocuments
+                Files = rgpszMkDocuments,
             };
 
             //VSQUERYADDFILERESULTS.VSQUERYADDFILERESULTS_AddOK;

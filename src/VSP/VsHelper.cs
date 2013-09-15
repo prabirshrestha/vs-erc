@@ -101,6 +101,12 @@ namespace VSP
             return (project as Project);
         }
 
+        public Project GetProjectFromVsProject(IVsProject vsproject)
+        {
+            var hierarchy = vsproject as IVsHierarchy;
+            return hierarchy != null ? GetProject(hierarchy) : null;
+        }
+
         /// <remarks>http://blogs.clariusconsulting.net/pga/how-do-i-get-a-project-from-a-ivshierarchy-and-viceversa/</remarks>
         public IVsHierarchy GetHierarchy(Project project, IServiceProvider serviceProvider = null)
         {

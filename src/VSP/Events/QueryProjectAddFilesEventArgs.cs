@@ -1,4 +1,6 @@
-﻿namespace VSP.Events
+﻿using EnvDTE;
+
+namespace VSP.Events
 {
     public class QueryProjectAddFilesEventArgs
     {
@@ -18,6 +20,5 @@
         }
 
         public string[] Files { get; set; }
-
     }
 }
