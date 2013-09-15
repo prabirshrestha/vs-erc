@@ -33,6 +33,16 @@ namespace VSP.Events.Vs
         public int OnAfterAddFilesEx(int cProjects, int cFiles, IVsProject[] rgpProjects, int[] rgFirstIndices,
             string[] rgpszMkDocuments, VSADDFILEFLAGS[] rgFlags)
         {
+            var args = new PostProjectAddFilesEventArgs(this.events)
+            {
+                Files = rgpszMkDocuments
+            };
+
+            //VSQUERYADDFILERESULTS.VSQUERYADDFILERESULTS_AddOK;
+            //VSQUERYADDFILERESULTS.VSQUERYADDFILERESULTS_AddNotOK;
+
+            this.events.TriggerPostProjectAddFiles(args);
+
             return VSConstants.S_OK;
         }
 

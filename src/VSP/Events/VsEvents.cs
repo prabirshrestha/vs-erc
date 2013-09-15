@@ -34,6 +34,7 @@ namespace VSP.Events
         public event EventHandler<PostProjectLoadEventArgs> PostProjectLoad;
 
         public event EventHandler<QueryProjectAddFilesEventArgs> QueryProjectAddFiles; 
+        public event EventHandler<PostProjectAddFilesEventArgs> PostProjectAddFiles; 
 
         public VsEvents(VsHelper vsHelper)
         {
@@ -161,6 +162,14 @@ namespace VSP.Events
             if (QueryProjectAddFiles != null)
             {
                 QueryProjectAddFiles(this, args);
+            }
+        }
+
+        public void TriggerPostProjectAddFiles(PostProjectAddFilesEventArgs args)
+        {
+            if (PostProjectAddFiles != null)
+            {
+                PostProjectAddFiles(this, args);
             }
         }
     }
