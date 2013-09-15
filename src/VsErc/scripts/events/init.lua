@@ -20,4 +20,4 @@ function erc.emit (name, ...)
     end
 end
 
-require('events/_vswpftextviewcreated')
+-- require('events/_vswpftextviewcreated')

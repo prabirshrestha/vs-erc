@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
-using VSP.Comands;
+using VSP.Commands;
 using VSP.Events;
 
 namespace VSP

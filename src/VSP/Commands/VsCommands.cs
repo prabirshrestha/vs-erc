@@ -1,4 +1,4 @@
-﻿namespace VSP.Comands
+﻿namespace VSP.Commands
 {
     public class VsCommands
     {
@@ -18,7 +18,7 @@
         /// Opens a File.NewFile dialog
         /// vsHelpers.Commands.ExecuteCommand("File.NewFile")
         /// </example>
-        public void Execute(string commandName, string commandArgs = "")
+        public void Execute(string commandName, string commandArgs)
         {
             this.vsHelper.DTE.ExecuteCommand(commandName, commandArgs);
         }

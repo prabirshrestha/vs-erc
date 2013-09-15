@@ -134,22 +134,16 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bindings\Erc\Editor\ErcEditorVersionBindings.cs" />
-    <Compile Include="Bindings\Erc\Editor\ErcNameBindings.cs" />
-    <Compile Include="Bindings\Erc\Editor\Vs\Events\DocumentListener.cs" />
-    <Compile Include="Bindings\Erc\Editor\Vs\Events\ErcEditorVsEventsWpfTextviewCreationListener.cs" />
-    <Compile Include="Bindings\Erc\ErcVersionBindings.cs" />
-    <Compile Include="Bindings\Erc\Editor\Vs\ErcEditorVsAssemblies.cs" />
-    <Compile Include="Bindings\Erc\Editor\Vs\ErcEditorVsDteBindings.cs" />
-    <Compile Include="Bindings\Erc\ErcLogBindings.cs" />
-    <Compile Include="Bindings\GetterBinding.cs" />
-    <Compile Include="Bindings\Erc\ErcMyErcBindings.cs" />
-    <Compile Include="Bindings\IBinding.cs" />
-    <Compile Include="Bindings\Erc\ErcNameBindings.cs" />
-    <Compile Include="Bindings\ErcBindings.cs" />
-    <Compile Include="Bindings\MethodBinding.cs" />
-    <Compile Include="Bindings\ValueBinding.cs" />
+    <None Include="BindingsOld\Erc\Editor\Vs\Events\DocumentListener.cs" />
+    <None Include="BindingsOld\Erc\Editor\Vs\Events\ErcEditorVsEventsWpfTextviewCreationListener.cs" />
+    <None Include="BindingsOld\GetterBinding.cs" />
+    <None Include="BindingsOld\IBinding.cs" />
+    <None Include="BindingsOld\ErcBindings.cs" />
+    <None Include="BindingsOld\MethodBinding.cs" />
+    <None Include="BindingsOld\ValueBinding.cs" />
     <Compile Include="Guids.cs" />
+    <Compile Include="LuaBindings\IBindings.cs" />
+    <Compile Include="LuaBindings\VsErcBindings.cs" />
     <Compile Include="netfx\System\Guard.cs" />
     <Compile Include="netfx\System\Reflection\Reflect.cs" />
     <Compile Include="Resources.Designer.cs">
@@ -164,6 +158,7 @@
     <Content Include="scripts\settimeout.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Compile Include="VsErcLogger.cs" />
     <Compile Include="VsErcPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -193,6 +188,9 @@
     </Content>
     <None Include="packages.config" />
     <Content Include="scripts\events\_vswpftextviewcreated.lua">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="scripts\commands\init.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">

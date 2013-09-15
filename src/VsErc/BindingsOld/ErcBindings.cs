@@ -64,6 +64,8 @@ namespace PrabirShrestha.VsErc.Bindings
         {
             // init.lua is responsible for load erc.MYERC
             var initScript = Path.Combine(AssemblyDirectory, "scripts", "init.lua");
+
+Console.WriteLine();
             try
             {
                 Lua.DoFile(initScript);

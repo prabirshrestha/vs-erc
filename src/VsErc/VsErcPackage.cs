@@ -1,9 +1,8 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
 using NLua;
-using PrabirShrestha.VsErc.Bindings;
+using PrabirShrestha.VsErc.LuaBindings;
 using VSP;
 
 namespace PrabirShrestha.VsErc
@@ -29,47 +28,61 @@ namespace PrabirShrestha.VsErc
     [ProvideAutoLoad(UIContextGuids80.NoSolution)]
     public sealed class VsErcPackage : Package
     {
-        private static ErcBindings ercBindings;
-
+        private static VsErcPackage instance;
         private readonly VsHelper vsHelper;
+        private readonly Lua lua;
+        private readonly VsErcBindings vsErcBindings;
+        private readonly VsErcLogger vsErcLogger;
 
         public VsHelper VsHelper
         {
-            get { return vsHelper; }
+            get
+            {
+                return this.vsHelper;
+            }
+        }
+
+        public Lua Lua
+        {
+            get
+            {
+                return this.lua;
+            }
+        }
+
+        public VsErcLogger Logger
+        {
+            get { return this.vsErcLogger; }
+        }
+
+        public static VsErcPackage Instance
+        {
+            get { return instance; }
         }
 
         public VsErcPackage()
         {
-            vsHelper = new VsHelper(this);
+            instance = this;
+            this.vsHelper = new VsHelper(this);
+            this.vsErcLogger = new VsErcLogger(this);
+            this.lua = new Lua();
+            this.vsErcBindings = new VsErcBindings(this, VsErcBindings.DefaultErcFilePath);
         }
-
-        public static ErcBindings ErcBindings
-        {
-            get { return ercBindings; }
-        }
-
-        public static VsErcPackage Instance { get; private set; }
 
         protected override void Initialize()
         {
             base.Initialize();
-            Instance = this;
-
-            var lua = new Lua();
+            this.vsErcLogger.Initialize();
             lua.LoadCLRPackage();
-            ercBindings = new ErcBindings(lua, ErcBindings.DefaultErcFilePath);
-            ErcBindings.Initialize();
+            this.vsErcBindings.Initialize();
+            this.vsErcBindings.LoadScripts();
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            ercBindings.Dispose();
-        }
-
-        public static T GetGlobalService<T>(Type type = null) where T : class
-        {
-            return GetGlobalService(type ?? typeof(T)) as T;
+            this.vsErcBindings.Dispose();
+            this.lua.Dispose();
         }
     }
 }
