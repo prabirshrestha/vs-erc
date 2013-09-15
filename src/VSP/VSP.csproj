@@ -44,6 +44,7 @@
     <Compile Include="Events\PostSaveEventArgs.cs" />
     <Compile Include="Events\PostSolutionCloseEventArgs.cs" />
     <Compile Include="Events\PostProjectOpenEventArgs.cs" />
+    <Compile Include="Events\PostDocumentWindowHideEventArgs.cs" />
     <Compile Include="Events\PreDocumentWindowShow.cs" />
     <Compile Include="Events\PreProjectUnloadEventArgs.cs" />
     <Compile Include="Events\PreProjectCloseEventArgs.cs" />

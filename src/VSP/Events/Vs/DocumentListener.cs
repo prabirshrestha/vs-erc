@@ -27,6 +27,23 @@ namespace VSP.Events.Vs
 
         public int OnAfterDocumentWindowHide(uint docCookie, IVsWindowFrame pFrame)
         {
+            uint flags, readlocks, editlocks;
+            string name; IVsHierarchy hier;
+            uint itemid; IntPtr docData;
+
+            this.events.VsHelper.RunningDocumentTable
+                .GetDocumentInfo(docCookie, out flags, out readlocks, out editlocks, out name,
+                    out hier, out itemid, out docData);
+
+            var args = new PostDocumentWindowHideEventArgs(this.events)
+            {
+                DocCookie = docCookie,
+                VsWindowFrame = pFrame,
+                FilePath = name
+            };
+
+            this.events.TriggerPostDocumentWindowHide(args);
+
             return VSConstants.S_OK;
         }
 
