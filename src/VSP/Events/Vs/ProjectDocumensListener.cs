@@ -78,6 +78,16 @@ namespace VSP.Events.Vs
         public int OnAfterRemoveDirectories(int cProjects, int cDirectories, IVsProject[] rgpProjects, int[] rgFirstIndices,
             string[] rgpszMkDocuments, VSREMOVEDIRECTORYFLAGS[] rgFlags)
         {
+            var args = new PostProjectRemoveDirectoriesEventArgs(this.events)
+            {
+                Files = rgpszMkDocuments
+            };
+
+            //VSQUERYADDFILERESULTS.VSQUERYADDFILERESULTS_AddOK;
+            //VSQUERYADDFILERESULTS.VSQUERYADDFILERESULTS_AddNotOK;
+
+            this.events.TriggerPostProjectRemoveDirectories(args);
+
             return VSConstants.S_OK;
         }
 

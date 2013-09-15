@@ -14,3 +14,7 @@ end)
 erc.editor.vs._vshelper.Events.PostProjectRemoveFiles:Add(function(o, e)
 	erc.emit('_vspostprojectremovefiles')
 end)
+
+erc.editor.vs._vshelper.Events.PostProjectRemoveDirectories:Add(function(o, e)
+	erc.emit('_vspostprojectremovedirectories')
+end)
