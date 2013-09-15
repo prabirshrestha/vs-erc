@@ -185,10 +185,13 @@
     <Content Include="scripts\commands\init.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="scripts\events\onnewview.lua">
+    <Content Include="scripts\events\onnew.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="scripts\events\oncloseview.lua">
+    <Content Include="scripts\events\onclose.lua">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="scripts\events\onpostsave.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
