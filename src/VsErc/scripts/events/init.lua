@@ -22,4 +22,5 @@ end
 
 require('events/onnewview')
 require('events/oncloseview')
+require('events/onpresave')
 require('events/onpostsave')
