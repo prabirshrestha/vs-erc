@@ -18,6 +18,7 @@
         }
 
         public string FilePath { get; set; }
+        public uint DocCookie { get; set; }
 
     }
 }

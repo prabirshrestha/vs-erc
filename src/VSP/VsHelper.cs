@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using EnvDTE;
 using EnvDTE80;
@@ -109,6 +110,66 @@ namespace VSP
             solution.GetProjectOfUniqueName(project.FullName, out hierarchy);
 
             return hierarchy;
+        }
+
+        public IVsHierarchy GetHierarchyFromCookie(uint docCookie)
+        {
+            uint flags, readlocks, editlocks;
+            string name; IVsHierarchy hier;
+            uint itemid; IntPtr docData;
+
+            RunningDocumentTable.GetDocumentInfo(
+                docCookie, out flags, out readlocks, out editlocks, out name, out hier, out itemid, out docData);
+
+            return hier;
+        }
+
+        // Copied from http://social.msdn.microsoft.com/Forums/is/vsx/thread/2b5fcbd9-ddc9-42c9-b04e-67bd2aa4beb7
+        private string GetDocumentMoniker(uint docCookie)
+        {
+            uint rdtFlags, readLocks, editLocks, itemId;
+            IVsHierarchy owningHierarchy;
+            string documentMoniker;
+            IntPtr punkDocData;
+            if (ErrorHandler.Succeeded(RunningDocumentTable.GetDocumentInfo(docCookie,
+                                                        out rdtFlags,
+                                                        out readLocks,
+                                                        out editLocks,
+                                                        out documentMoniker,
+                                                        out owningHierarchy,
+                                                        out itemId,
+                                                        out punkDocData)))
+            {
+                try
+                {
+                    return documentMoniker;
+                }
+                finally
+                {
+                    if (punkDocData != IntPtr.Zero)
+                    {
+                        //It is important to release this, it is an IntPtr that represents a COM object, pursuant to the rules of COM
+                        //(since this is an out parameter) it has had its ref-count increased by 1, which means if we don't call Release
+                        //on it we will cause it to leak (and anything it holds on to).
+                        Marshal.Release(punkDocData);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public Document GetDocumentFromCookie(uint docCookie)
+        {
+            //http://pec.codeplex.com/
+            // Retrieve document information from the cookie to get the full document name.
+            string documentName = GetDocumentMoniker(docCookie);
+
+            // Search against the IDE documents to find the object that matches the full document name.
+            return dte
+                    .Documents
+                    .OfType<Document>()
+                    .FirstOrDefault(x => x != null && x.FullName == documentName);
         }
 
         private IVsTrackProjectDocuments2 projectDocumentTracker2;

@@ -18,6 +18,7 @@ namespace VSP.Events
 
         public event EventHandler<PreSaveEventArgs> PreSave;
         public event EventHandler<PostSaveEventArgs> PostSave;
+        public event EventHandler<PreDocumentWindowShowEventArgs> PreDocumentWindowShow; 
 
         public event EventHandler<PostSolutionOpenEventArgs> PostSolutionOpen;
         public event EventHandler<QuerySolutionCloseEventArgs> QuerySolutionClose;
@@ -55,6 +56,14 @@ namespace VSP.Events
             if (PostSave != null)
             {
                 PostSave(this, args);
+            }
+        }
+
+        internal void TriggerPreDocumentWindowShow(PreDocumentWindowShowEventArgs args)
+        {
+            if (PreDocumentWindowShow != null)
+            {
+                PreDocumentWindowShow(this, args);
             }
         }
 

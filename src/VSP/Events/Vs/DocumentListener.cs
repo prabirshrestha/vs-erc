@@ -47,7 +47,8 @@ namespace VSP.Events.Vs
 
             var args = new PreSaveEventArgs(this.events)
             {
-                FilePath = name
+                FilePath = name,
+                DocCookie = docCookie
             };
 
             this.events.TriggerPreSave(args);
@@ -67,7 +68,8 @@ namespace VSP.Events.Vs
 
             var args = new PostSaveEventArgs(this.events)
             {
-                FilePath = name
+                FilePath = name,
+                DocCookie = docCookie
             };
 
             this.events.TriggerPostSave(args);
@@ -77,6 +79,24 @@ namespace VSP.Events.Vs
 
         public int OnBeforeDocumentWindowShow(uint docCookie, int fFirstShow, IVsWindowFrame pFrame)
         {
+            uint flags, readlocks, editlocks;
+            string name; IVsHierarchy hier;
+            uint itemid; IntPtr docData;
+
+            this.events.VsHelper.RunningDocumentTable
+                .GetDocumentInfo(docCookie, out flags, out readlocks, out editlocks, out name,
+                    out hier, out itemid, out docData);
+
+            var args = new PreDocumentWindowShowEventArgs(this.events)
+            {
+                DocCookie = docCookie,
+                FirstShow = Convert.ToBoolean(fFirstShow),
+                VsWindowFrame = pFrame,
+                FilePath = name
+            };
+
+            this.events.TriggerPreDocumentWindowShow(args);
+
             return VSConstants.S_OK;
         }
 

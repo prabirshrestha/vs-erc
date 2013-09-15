@@ -56,47 +56,10 @@ namespace PrabirShrestha.VsErc
             base.Initialize();
             Instance = this;
 
-            VsHelper.Events.PreSave += (sender, args) => {
-                Debug.WriteLine("pre save " + args.FilePath);
-            };
-
-            VsHelper.Events.PostSave += (sender, args) => {
-                Debug.WriteLine("post save " + args.FilePath);
-            };
-
-            VsHelper.Events.PostSolutionOpen += (sender, args) => {
-                Debug.WriteLine("post solution open " + args.FilePath);
-            };
-
-            VsHelper.Events.QuerySolutionClose += (sender, args) => {
-                Debug.WriteLine("query colse solution " + args.FilePath);
-            };
-
-            VsHelper.Events.PreSolutionClose += (sender, args) =>
-                Debug.WriteLine("pre solution close " + args.FilePath);
-
-            VsHelper.Events.PostSolutionClose += (sender, args) =>
-                Debug.WriteLine("post solution close " + args.FilePath);
-
-            VsHelper.Events.PostProjectOpen += (sender, args) =>
-                Debug.WriteLine("post project open " + args.FilePath + " " + args.Added);
-
-            VsHelper.Events.QueryProjectClose += (sender, args) =>
-                Debug.WriteLine("query close project " + args.FilePath + " " + args.Removing);
-
-            VsHelper.Events.PreProjectClose += (sender, args) =>
-                Debug.WriteLine("pre close project " + args.FilePath + " " + args.Removed);
-
-            VsHelper.Events.QueryProjectUnload += (sender, args) =>
-                 Debug.WriteLine("query unload project " + args.FilePath + " " + args.UnloadProject);
-
-            VsHelper.Events.PostProjectLoad += (sender, args) =>
-                Debug.WriteLine("post project load " + args.FilePath);
-
-            //var lua = new Lua();
-            //lua.LoadCLRPackage();
-            //ercBindings = new ErcBindings(lua, ErcBindings.DefaultErcFilePath);
-            //ErcBindings.Initialize();
+            var lua = new Lua();
+            lua.LoadCLRPackage();
+            ercBindings = new ErcBindings(lua, ErcBindings.DefaultErcFilePath);
+            ErcBindings.Initialize();
         }
 
         protected override void Dispose(bool disposing)

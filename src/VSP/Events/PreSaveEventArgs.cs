@@ -1,4 +1,6 @@
-﻿namespace VSP.Events
+﻿using EnvDTE;
+
+namespace VSP.Events
 {
     public class PreSaveEventArgs
     {
@@ -18,6 +20,6 @@
         }
 
         public string FilePath { get; set; }
-
+        public uint DocCookie { get; set; }
     }
 }
