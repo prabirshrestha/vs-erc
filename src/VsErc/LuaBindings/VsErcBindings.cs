@@ -56,7 +56,9 @@ namespace PrabirShrestha.VsErc.LuaBindings
             lua.RegisterFunction("erc.name", this, Reflect.GetProperty(() => Name).GetMethod);
             lua.RegisterFunction("erc.version", this, Reflect.GetProperty(() => Version).GetMethod);
             lua.RegisterFunction("erc.platform", this, Reflect.GetProperty(() => Platform).GetMethod);
+            lua.RegisterFunction("erc.arch", this, Reflect.GetProperty(() => Arch).GetMethod);
 
+            lua.RegisterFunction("erc.editor.arch", this, Reflect.GetProperty(() => EditorArch).GetMethod);
             lua.RegisterFunction("erc.editor.name", this, Reflect.GetProperty(() => EditorName).GetMethod);
             lua.RegisterFunction("erc.editor.version", this, Reflect.GetProperty(() => EditorVersion).GetMethod);
 
@@ -129,6 +131,22 @@ namespace PrabirShrestha.VsErc.LuaBindings
                     default:
                         return null;
                 }
+            }
+        }
+
+        public string Arch
+        {
+            get
+            {
+                return Environment.Is64BitOperatingSystem ? "x64" : "x32";
+            }
+        }
+
+        public string EditorArch
+        {
+            get
+            {
+                return Environment.Is64BitProcess ? "x64" : "x32";
             }
         }
 
