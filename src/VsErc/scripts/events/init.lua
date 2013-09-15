@@ -21,3 +21,4 @@ function erc.emit (name, ...)
 end
 
 -- require('events/_vswpftextviewcreated')
+require('events/onnewview')
