@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using EnvDTE;
+using EnvDTE80;
+using Microsoft.VisualStudio.Shell;
 
 namespace PrabirShrestha.VsErc.LuaBindings
 {
@@ -45,14 +48,13 @@ namespace PrabirShrestha.VsErc.LuaBindings
             var lua = this.package.Lua;
 
             lua.NewTable("erc");
-
             lua.RegisterFunction("erc._log", this.package.Logger, this.package.Logger.GetType().GetMethod("Log"));
 
             lua["erc.MYERC"] = ercFilePath;
             lua.NewTable("erc.editor");
             lua.NewTable("erc.editor.vs");
             this.RegisterDotNetAssemblyNames();
-
+           
             lua.RegisterFunction("erc.name", this, Reflect.GetProperty(() => Name).GetMethod);
             lua.RegisterFunction("erc.version", this, Reflect.GetProperty(() => Version).GetMethod);
             lua.RegisterFunction("erc.platform", this, Reflect.GetProperty(() => Platform).GetMethod);
@@ -61,6 +63,8 @@ namespace PrabirShrestha.VsErc.LuaBindings
             lua.RegisterFunction("erc.editor.arch", this, Reflect.GetProperty(() => EditorArch).GetMethod);
             lua.RegisterFunction("erc.editor.name", this, Reflect.GetProperty(() => EditorName).GetMethod);
             lua.RegisterFunction("erc.editor.version", this, Reflect.GetProperty(() => EditorVersion).GetMethod);
+
+            lua.RegisterFunction("erc.editor.vs.dte", Reflect.GetProperty(() => DTE).GetMethod);
 
             lua["erc.editor.vs._vshelper"] = this.package.VsHelper;
         }
@@ -148,6 +152,13 @@ namespace PrabirShrestha.VsErc.LuaBindings
             {
                 return Environment.Is64BitProcess ? "x64" : "x32";
             }
+        }
+
+        private static DTE2 dte;
+
+        private static DTE2 DTE
+        {
+            get { return dte ?? (dte = ServiceProvider.GlobalProvider.GetService(typeof(DTE)) as DTE2); }
         }
 
         private void RegisterDotNetAssemblyNames()

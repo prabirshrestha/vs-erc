@@ -1,0 +1,59 @@
+print(erc.name() .. erc.version())
+print(erc.editor.name() .. erc.editor.version())
+
+-- -- clipboard
+-- erc.clipboard.settext('hello world!')
+-- print(erc.clipboard.gettext())
+
+-- -- messagebox - ok
+-- erc.messagebox.ok('message')
+-- erc.messagebox.ok('message', 'title')
+
+-- -- messagebox - ok/cancel
+-- local result = erc.messagebox.okcancel('question?')
+-- if(result) then
+-- 	print('ok')
+-- else
+-- 	print('cancel')
+-- end
+-- local result = erc.messagebox.okcancel('question?', 'title')
+
+-- -- settimeout
+-- erc.settimeout(20 * 1000, function( )
+-- 	print('display this message after 20 sec')
+-- end)
+
+-- -- listening to events
+-- erc.on('new', function()
+-- 	print('new view created')
+-- end)
+
+-- erc.on('close', function( )
+-- 	print('view closed')
+-- end)
+
+-- erc.on({
+-- 	presave = function()
+-- 		print('on pre save')
+-- 	end,
+-- 	postsave = function()
+-- 		print('on post save')
+-- 	end
+-- })
+
+-- erc.on({
+-- 	_vspostsolutionopen = function()
+-- 		print('vs post solution open')
+-- 	end,
+-- 	_vsquerysolutionclose = function()
+-- 		print('vs query solution close')
+-- 	end,
+-- 	_vspresolutionclose = function()
+-- 		print('vs pre solution close')
+-- 	end,
+-- 	_vspostsolutionclose = function()
+-- 		print('vs post solution close')
+-- 	end
+-- })
+
+

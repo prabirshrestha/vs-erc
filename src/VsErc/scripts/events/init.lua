@@ -20,8 +20,8 @@ function erc.emit (name, ...)
     end
 end
 
-require('events/onnewview')
-require('events/oncloseview')
+require('events/onnew')
+require('events/onclose')
 require('events/onpresave')
 require('events/onpostsave')
 require('events/vs/solutionevents')

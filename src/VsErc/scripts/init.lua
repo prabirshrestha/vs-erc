@@ -1,4 +1,7 @@
 ﻿
+local erclog = erc._log
+erc._log = nil
+
 function print( ... )
 	-- redefine the print to use erc._log
 	local arguments = {...}
@@ -11,7 +14,7 @@ function print( ... )
 		printResult = printResult .. tostring(v)
 	end
 	printResult = printResult .. "\n"
-	erc._log(printResult)
+	erclog(printResult)
 end
 
 function _dump(o)
@@ -26,7 +29,6 @@ function _dump(o)
 		return tostring(o)
 	end
 end
-
 
 local function scriptPath()
    return debug.getinfo(2, "S").source:sub(2)
