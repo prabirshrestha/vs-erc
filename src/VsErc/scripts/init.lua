@@ -1,6 +1,6 @@
 ﻿
 local erclog = erc._log
-erc._log = nil
+-- erc._log = nil
 
 function print( ... )
 	-- redefine the print to use erc._log

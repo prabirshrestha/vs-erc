@@ -56,4 +56,4 @@ print(erc.editor.name() .. erc.editor.version())
 -- 	end
 -- })
 
-
+-- print(erc.editor.vs.dte())

@@ -7,7 +7,6 @@ local DialogResult    	= luanet.import_type "System.Windows.Forms.DialogResult"
 -- print(type(MessageBox))
 -- print(print(getmetatable(MessageBox)))
 local m = getmetatable(MessageBox)
-print(rawget(m, 'get_UnderlyingSystemType'))
 
 local messagebox = {}
 
