@@ -23,5 +23,10 @@
             this.vsHelper.DTE.ExecuteCommand(commandName, commandArgs);
         }
 
+        public EnvDTE.Command Get(string commandName, int id)
+        {
+            return this.vsHelper.DTE.Commands.Item(commandName, id);
+        }
+
     }
 }

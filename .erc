@@ -1,5 +1,5 @@
-print(erc.name() .. erc.version())
-print(erc.editor.name() .. erc.editor.version())
+-- print(erc.name() .. erc.version())
+-- print(erc.editor.name() .. erc.editor.version())
 
 -- -- clipboard
 -- erc.clipboard.settext('hello world!')
@@ -57,3 +57,10 @@ print(erc.editor.name() .. erc.editor.version())
 -- })
 
 -- print(erc.editor.vs.dte())
+
+-- -- commands
+-- -- get command
+-- local command = erc.editor.vs.commands.get('File.SaveAll', -1)
+-- print(command)
+
+-- erc.editor.vs.commands.execute('File.NewFile')
