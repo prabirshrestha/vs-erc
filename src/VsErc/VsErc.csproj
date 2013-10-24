@@ -144,6 +144,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="VS\VsSearchProvider\VSSearchableItem.cs" />
+    <Compile Include="VS\VsSearchProvider\VSSearchProvider.cs" />
+    <Compile Include="VS\VsSearchProvider\VSSearchResult.cs" />
+    <Compile Include="VS\VsSearchProvider\VSSearchTask.cs" />
     <Content Include="scripts\events\init.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>

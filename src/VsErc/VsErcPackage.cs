@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Shell;
 using NLua;
 using PrabirShrestha.VsErc.LuaBindings;
+using PrabirShrestha.VsErc.VS.VsSearchProvider;
 using VSP;
 
 namespace PrabirShrestha.VsErc
@@ -26,7 +27,8 @@ namespace PrabirShrestha.VsErc
     [Guid(GuidList.guidVsErcPkgString)]
     [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     [ProvideAutoLoad(UIContextGuids80.NoSolution)]
-    public sealed class VsErcPackage : Package
+    [ProvideSearchProvider(typeof(VS.VsSearchProvider.VSSearchProvider), "VsErc Search Provider")]
+    public sealed class VsErcPackage : ExtensionPointPackage
     {
         private static VsErcPackage instance;
         private readonly VsHelper vsHelper;

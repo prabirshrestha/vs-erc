@@ -12,5 +12,7 @@ namespace PrabirShrestha.VsErc
         public static readonly Guid guidVsErcCmdSet = new Guid(guidVsErcCmdSetString);
 
         public const string guidErcOutputPaneWindow = "7f246e58-0a76-4f28-93f5-7895eefc4d58";
+
+        public const string guidVsErcSearchProvider = "CBD8B513-0302-48C4-ABAA-48E87DCA0F96";
     }
 }
