@@ -18,12 +18,6 @@ namespace PrabirShrestha.VsErc.VS.VsSearchProvider
         public VSSearchProvider()
         {
             searchableItems = new List<VSSearchableItem>();
-            searchableItems.Add(new VSSearchableItem("JSON Encode", "JSON Encode string", null));
-            searchableItems.Add(new VSSearchableItem("JSON Decode", "JSON Decode string", null));
-            searchableItems.Add(new VSSearchableItem("Url Encode", "Url Encode string", null));
-            searchableItems.Add(new VSSearchableItem("Url Decode", "Url Decode string", null));
-            searchableItems.Add(new VSSearchableItem("Html Encode", "Html Encode string", null));
-            searchableItems.Add(new VSSearchableItem("Html Decode", "Html Decode string", null));
         }
 
         public Guid Category

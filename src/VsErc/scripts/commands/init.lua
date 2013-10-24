@@ -1,9 +1,21 @@
-﻿erc.editor.vs.commands = {}
+erc.commands = {}
 
-erc.editor.vs.commands.execute = function(commandname, commandsargs)
-	erc.editor.vs._vshelper.Commands:Execute(commandname, commandsargs or '')
+local commands = {}
+
+function erc.commands.add (command)
+	commands[command.name] = command
 end
 
-erc.editor.vs.commands.get = function (commandname, commandsargs)
-	return erc.editor.vs._vshelper.Commands:Get(commandname, commandsargs or -1)
+function erc.commands.get(name)
+	return commands[name]
 end
+
+function erc.commands.getall()
+	return commands
+end
+
+function erc.commands.remove(nameOrCommand)
+	-- todo
+end
+
+require 'commands/vs/vscommands'
