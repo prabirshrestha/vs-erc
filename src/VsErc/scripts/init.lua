@@ -51,7 +51,7 @@ erc.messagebox = require 'messagebox'
 erc.settimeout = require 'settimeout'
 require 'events/init'
 require 'commands/init'
---require 'statusbar'
+-- require 'statusbar'
 
 -- restore the original package path
 package.path = oldPackagePath;

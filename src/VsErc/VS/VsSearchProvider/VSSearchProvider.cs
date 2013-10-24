@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
+using NLua;
 
 namespace PrabirShrestha.VsErc.VS.VsSearchProvider
 {
@@ -13,11 +14,19 @@ namespace PrabirShrestha.VsErc.VS.VsSearchProvider
         private const string DisplayTextString = "VsErc";
         private const string CategoryShortcutString = "erc";
 
-        private IList<VSSearchableItem> searchableItems;
-
-        public VSSearchProvider()
+        private IList<VSSearchableItem> SearchableItems
         {
-            searchableItems = new List<VSSearchableItem>();
+            get
+            {
+                IList<VSSearchableItem> searchableItems = new List<VSSearchableItem>();
+                var commands = (LuaTable)VsErcPackage.Instance.Lua.GetFunction("erc.commands.getall").Call()[0];
+                foreach (LuaTable command in commands.Values)
+                {
+                    var item = new VSSearchableItem((string)command["name"], (string)command["description"], null);
+                    searchableItems.Add(item);
+                }
+                return searchableItems;
+            }
         }
 
         public Guid Category
@@ -28,14 +37,14 @@ namespace PrabirShrestha.VsErc.VS.VsSearchProvider
         //Main Search method that calls MSDNSearchTask to create and execute search query
         public IVsSearchTask CreateSearch(uint dwCookie, IVsSearchQuery pSearchQuery, IVsSearchProviderCallback pSearchCallback)
         {
-            return new VSSearchTask(this.searchableItems, this, dwCookie, pSearchQuery, pSearchCallback);
-   
+            return new VSSearchTask(this.SearchableItems, this, dwCookie, pSearchQuery, pSearchCallback);
+
         }
 
         //Verifies persistent data to populate MRU list with previously selected result
         public IVsSearchItemResult CreateItemResult(string lpszPersistenceData)
         {
-            return VSSearchResult.CreateItemResult(lpszPersistenceData, this.searchableItems, this);
+            return VSSearchResult.CreateItemResult(lpszPersistenceData, this.SearchableItems, this);
         }
 
         //MSDN Search Category Heading 

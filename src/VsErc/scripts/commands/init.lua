@@ -18,4 +18,9 @@ function erc.commands.remove(nameOrCommand)
 	-- todo
 end
 
+function erc.commands.execute(name)
+	local command = commands[name].new()
+	command:execute()
+end
+
 require 'commands/vs/vscommands'

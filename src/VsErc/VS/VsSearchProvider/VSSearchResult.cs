@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows;
 using Microsoft.Internal.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell.Interop;
+using NLua;
 
 namespace PrabirShrestha.VsErc.VS.VsSearchProvider
 {
@@ -11,6 +12,20 @@ namespace PrabirShrestha.VsErc.VS.VsSearchProvider
     {
         VSSearchableItem Item;
         IVsSearchProvider Provider;
+
+        private LuaFunction executeCommandLuaFunction;
+
+        private LuaFunction ExecuteCommandLuaFunction
+        {
+            get
+            {
+                if (executeCommandLuaFunction == null)
+                {
+                    executeCommandLuaFunction = VsErcPackage.Instance.Lua.GetFunction("erc.commands.execute");
+                }
+                return executeCommandLuaFunction;
+            }
+        }
 
         public VSSearchResult(VSSearchableItem item, IVsSearchProvider provider)
         {
@@ -51,10 +66,11 @@ namespace PrabirShrestha.VsErc.VS.VsSearchProvider
             }
         }
 
+
         public void InvokeAction()
         {
             // This function is called when the user selects the item result from the Quick Launch popup
-            System.Windows.Forms.MessageBox.Show(Item.Name);
+            ExecuteCommandLuaFunction.Call(this.Item.Name);
         }
 
         public string PersistenceData
