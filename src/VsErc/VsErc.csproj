@@ -28,6 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,6 +38,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="KeraLua">
@@ -214,6 +216,15 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scripts\commands\vs\vscommands.lua">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="scripts\window.lua">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="scripts\includes\com.lua">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="scripts\info.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">

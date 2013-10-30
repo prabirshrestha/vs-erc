@@ -38,7 +38,7 @@ local scriptDir = string.gsub(scriptPath(), "^(.+\\)[^\\]+$", "%1")
 
 local oldPackagePath = package.path
 
-package.path = package.path ..';' .. scriptDir .. '?.lua'
+package.path = package.path ..';' .. scriptDir .. 'includes\\' .. '?.lua' .. ';' .. scriptDir .. '?.lua'
 
 -- load assemblies
 luanet.load_assembly(erc.editor.vs.assemblies.winforms)
@@ -49,12 +49,14 @@ luanet.load_assembly(erc.editor.vs.assemblies.vsinterop)
 erc.clipboard = require 'clipboard'
 erc.messagebox = require 'messagebox'
 erc.settimeout = require 'settimeout'
+require 'info'
 require 'events/init'
 require 'commands/init'
+require 'window'
 -- require 'statusbar'
 
--- restore the original package path
-package.path = oldPackagePath;
+-- restore the original package path with includes
+package.path = oldPackagePath .. ';' .. scriptDir .. 'includes\\' .. '?.lua'
 
 if erc.MYERC then
     local myerc = assert(loadfile(erc.MYERC))
