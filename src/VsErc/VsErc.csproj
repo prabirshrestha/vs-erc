@@ -218,7 +218,7 @@
     <Content Include="scripts\commands\vs\vscommands.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="scripts\window.lua">
+    <Content Include="scripts\view.lua">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="scripts\includes\com.lua">

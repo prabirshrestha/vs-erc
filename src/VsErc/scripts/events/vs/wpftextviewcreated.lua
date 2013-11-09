@@ -23,11 +23,11 @@ erc.on('_vswpftextviewcreated', function(o, e)
 	end
 
 	function gotaggregatefocus()
-		erc.emit('activated')
+		erc.emit('activated', erc.view.new(wpftextview))
 	end
 
 	function lostaggregatefocus()
-		erc.emit('deactivated')
+		erc.emit('deactivated', erc.view.new(wpftextview))
 	end
 
 	created()

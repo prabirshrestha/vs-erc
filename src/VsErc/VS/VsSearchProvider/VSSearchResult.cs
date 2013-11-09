@@ -70,7 +70,15 @@ namespace PrabirShrestha.VsErc.VS.VsSearchProvider
         public void InvokeAction()
         {
             // This function is called when the user selects the item result from the Quick Launch popup
-            ExecuteCommandLuaFunction.Call(this.Item.Name);
+            try
+            {
+                ExecuteCommandLuaFunction.Call(this.Item.Name);
+            }
+            catch (Exception ex)
+            {
+                VsErcPackage.Instance.Logger.Log(ex.Message);
+                VsErcPackage.Instance.Logger.Log(ex.StackTrace);
+            }
         }
 
         public string PersistenceData

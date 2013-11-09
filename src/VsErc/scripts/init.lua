@@ -52,7 +52,7 @@ erc.settimeout = require 'settimeout'
 require 'info'
 require 'events/init'
 require 'commands/init'
-require 'window'
+require 'view'
 -- require 'statusbar'
 
 -- restore the original package path with includes

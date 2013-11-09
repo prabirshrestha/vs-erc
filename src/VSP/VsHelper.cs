@@ -62,6 +62,11 @@ namespace VSP
             get { return sdte; }
         }
 
+        public Document ActiveDocument 
+        {
+            get { return DTE.ActiveDocument; }
+        }
+
         private IVsRunningDocumentTable runningDocumentTable;
         public IVsRunningDocumentTable RunningDocumentTable
         {

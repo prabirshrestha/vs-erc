@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text.Editor;
 
@@ -20,7 +21,8 @@ namespace VSP.Events
         private IWpfTextView wpfTextView;
         public IWpfTextView WpfTextView
         {
-            get {
+            get
+            {
                 return wpfTextView ??
                        (wpfTextView = this.events.VsHelper.GetWpfTextViewFromVsWindowFrame(VsWindowFrame));
             }

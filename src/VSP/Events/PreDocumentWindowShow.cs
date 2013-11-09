@@ -21,7 +21,8 @@ namespace VSP.Events
         private IWpfTextView wpfTextView;
         public IWpfTextView WpfTextView
         {
-            get {
+            get
+            {
                 return wpfTextView ??
                        (wpfTextView = this.events.VsHelper.GetWpfTextViewFromVsWindowFrame(VsWindowFrame));
             }
