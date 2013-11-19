@@ -4,6 +4,8 @@ using System.Reflection;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Editor;
 
 namespace PrabirShrestha.VsErc.LuaBindings
 {
@@ -135,6 +137,14 @@ namespace PrabirShrestha.VsErc.LuaBindings
 
         private void RegisterDotNetAssemblyNames()
         {
+            //IWpfTextView t = null;
+            //ITextEdit textEdit = t.TextBuffer.CreateEdit();
+            //var selection = t.Selection.g.StreamSelectionSpan.SnapshotSpan;
+            //var x = selection.Start.Position - selection.Start.GetContainingLine().Start.Position + 1;
+
+           
+            ////local selection = wpftextview.Selection.StreamSelectionSpan.SnapshotSpan;
+        ////local edit = wpftextview.TextBuffer:CreateEdit()
             var lua = this.package.Lua;
             lua.NewTable("erc.editor.vs.assemblies");
             var assemblies = lua.GetTable("erc.editor.vs.assemblies");

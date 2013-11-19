@@ -46,11 +46,16 @@ erc.view.new = function(viewdata)
 			return nil
 		end
 
-		local selection = wpftextview.Selection.StreamSelectionSpan.SnapshotSpan;
-		local edit = wpftextview.TextBuffer:CreateEdit()
-		edit:Replace(selection.Start.Position, selection.End.Position, text)
-		edit:Apply()
-		edit:Dispose()
+		erc.editor.vs._vshelper:ReplaceSelectedText(wpftextview, text)
+
+		-- local selection = wpftextview.Selection.StreamSelectionSpan.SnapshotSpan;
+		-- local edit = wpftextview.TextBuffer:CreateEdit()
+		-- edit:Replace(selection.Start.Position, selection.End.Position, text)
+		-- print(selection.Start.Position)
+		-- print(selection.End.Position)
+
+		-- edit:Apply()
+		-- edit:Dispose()
 	end
 
 	return self

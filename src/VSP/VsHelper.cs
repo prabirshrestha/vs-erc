@@ -235,6 +235,20 @@ namespace VSP
             }
         }
 
+        public void ReplaceSelectedText(IWpfTextView wpfTextView, string replaceText)
+        {
+            if (wpfTextView.Selection.IsEmpty)
+            {
+                return;
+            }
+
+            var selection = wpfTextView.Selection.StreamSelectionSpan.SnapshotSpan;
+            using (var edit = wpfTextView.TextBuffer.CreateEdit())
+            {
+                edit.Replace(selection, replaceText);
+                edit.Apply();
+            }
+        }
 
         public object GetGlobalService(Type type)
         {
