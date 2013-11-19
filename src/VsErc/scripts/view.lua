@@ -13,6 +13,8 @@ erc.view.new = function(viewdata)
 	self.editor = {}
 	self.editor.vs = {}
 
+	self.editor.vs.wpftextview = viewdata.wpftextview
+
 	self.id = function()
 		return viewdata.doccookie
 	end
@@ -29,7 +31,27 @@ erc.view.new = function(viewdata)
 		return self.editor.vs.wpftextview.TextSnapshot.LineCount
 	end
 
-	self.editor.vs.wpftextview = viewdata.wpftextview
+	self.selection = {}
+	self.selection.gettext = function()
+		local wpftextview = self.editor.vs.wpftextview
+		if not wpftextview or wpftextview.Selection.IsEmpty then
+			return nil
+		end
+		return wpftextview.Selection.StreamSelectionSpan:GetText()
+	end
+
+	self.selection.replacetext = function(text)
+		local wpftextview = self.editor.vs.wpftextview
+		if not wpftextview or wpftextview.Selection.IsEmpty then
+			return nil
+		end
+
+		local selection = wpftextview.Selection.StreamSelectionSpan.SnapshotSpan;
+		local edit = wpftextview.TextBuffer:CreateEdit()
+		edit:Replace(selection.Start.Position, selection.End.Position, text)
+		edit:Apply()
+		edit:Dispose()
+	end
 
 	return self
 end

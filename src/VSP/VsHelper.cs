@@ -62,7 +62,7 @@ namespace VSP
             get { return sdte; }
         }
 
-        public Document ActiveDocument 
+        public Document ActiveDocument
         {
             get { return DTE.ActiveDocument; }
         }
