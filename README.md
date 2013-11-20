@@ -10,8 +10,6 @@
 
 Currently only VS2013 RTM supported
 
-Extract nlua-signed from https://bitbucket.org/prabirshrestha/vs-erc/downloads to root
-
 VsErc -> Properties -> Debug
 Start external program:
 
