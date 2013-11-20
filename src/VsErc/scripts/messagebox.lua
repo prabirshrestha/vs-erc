@@ -3,8 +3,6 @@ local MessageBoxButtons = luanet.import_type "System.Windows.Forms.MessageBoxBut
 local MessageBoxIcon    = luanet.import_type "System.Windows.Forms.MessageBoxIcon"
 local DialogResult    	= luanet.import_type "System.Windows.Forms.DialogResult"
 
-local m = getmetatable(MessageBox)
-
 local messagebox = {}
 
 function messagebox.ok(message, title)

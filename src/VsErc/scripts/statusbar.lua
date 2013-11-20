@@ -1,7 +1,7 @@
 ﻿local Type              = luanet.import_type "System.Type"
 local Type_IVsStatusbar = Type.GetType('Microsoft.VisualStudio.Shell.Interop.IVsStatusbar, ' .. erc._editor.vs.assemblies.vsinterop)
 
-local iVsStatusbar = erc._editor.vs.serviceprovider.getbytype(Type_IVsStatusbar)
+local iVsStatusbar 		= erc._editor.vs.serviceprovider.getbytype(Type_IVsStatusbar)
 
 erc.statusbar = {}
 
